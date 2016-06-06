@@ -3,7 +3,6 @@ package arquivo;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.List;
 
 public abstract class ReaderXml extends ConciliacaoFiles implements FileConciliacao {
