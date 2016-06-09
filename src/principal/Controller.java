@@ -1,5 +1,7 @@
 package principal;
 
+import java.io.FileNotFoundException;
+
 import arquivo.Log;
 import arquivo.ReaderConfigs;
 
@@ -32,10 +34,12 @@ public class Controller {
 			try {
 				Thread.sleep(Long.parseLong(getReaderConfigs().getConfig("tempoEspera")));
 				this.run();
-			} catch (NumberFormatException e) {
-				this.log.MakeLog(e);
-			} catch (InterruptedException e) {
-				this.log.MakeLog(e);
+			} catch (Exception e) {
+				try {
+					this.log.MakeLog(e);
+				} catch (FileNotFoundException e1) {
+					//TODO: disparar email
+				}
 			}finally {
 				Thread.sleep(7200000);
 			}

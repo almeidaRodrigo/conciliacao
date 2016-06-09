@@ -1,14 +1,14 @@
 package arquivo;
 
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.List;
 
 public interface FileConciliacao {
 
-	public abstract File openFile(String Path);
+	public abstract FileReader openFile(String Path) throws FileNotFoundException;
 
-	public abstract void saveFile(File file, String data);
+	public abstract void saveFile(FileReader file, String data);
 
 	public abstract List<String> readFile(FileReader file);
 

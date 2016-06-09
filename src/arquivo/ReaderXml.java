@@ -1,6 +1,5 @@
 package arquivo;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.util.List;
@@ -21,7 +20,7 @@ public abstract class ReaderXml extends ConciliacaoFiles implements FileConcilia
 	/**
 	 * @see arquivo.FileConciliacao#openFile(java.lang.String)
 	 */
-	public File openFile(String Path) {
+	public FileReader openFile(String Path) {
 		return null;
 	}
 
@@ -29,7 +28,7 @@ public abstract class ReaderXml extends ConciliacaoFiles implements FileConcilia
 	/**
 	 * @see arquivo.FileConciliacao#saveFile(arquivo.FileConciliacao, java.lang.String)
 	 */
-	public void saveFile(File file, String data) {
+	public void saveFile(FileReader file, String data) {
 
 	}
 

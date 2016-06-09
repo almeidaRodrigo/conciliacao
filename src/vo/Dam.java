@@ -7,7 +7,7 @@ public class Dam {
 
 	private int CodigoLote;
 
-	private float NumSeq;
+	private int NumSeq;
 
 	private String CodigoAgencia;
 
@@ -23,13 +23,13 @@ public class Dam {
 
 	private String CpfCnpj;
 
-	private Calendar DataEmissao;
+	//private Calendar DataEmissao;
 
 	private Calendar DataArrecadacao;
 
 	private Calendar DataCredito;
 
-	private float ValorDocumento;
+	//private float ValorDocumento;
 
 	private float ValorPago;
 
@@ -37,10 +37,43 @@ public class Dam {
 
 	private float ValorTarifa;
 
-	private RegressReaderFile regressReaderFile;
-
-	public void Dam() {
-
+	/**
+	 * @param codigoLote
+	 * @param numSeq
+	 * @param codigoAgencia
+	 * @param numDam
+	 * @param seqDuplicacao
+	 * @param numReq
+	 * @param tipoDocumento
+	 * @param codigoUsuario
+	 * @param cpfCnpj
+	 * @param dataArrecadacao
+	 * @param dataCredito
+	 * @param valorPago
+	 * @param formaPagamento
+	 * @param valorTarifa
+	 * 
+	 */
+	public Dam(int codigoLote, int numSeq, String codigoAgencia, String numDam, int seqDuplicacao, int numReq,
+			String tipoDocumento, String codigoUsuario, String cpfCnpj, Calendar dataArrecadacao,
+			Calendar dataCredito, float valorPago, String formaPagamento, float valorTarifa) {
+		CodigoLote = codigoLote;
+		NumSeq = numSeq;
+		CodigoAgencia = codigoAgencia;
+		NumDam = numDam;
+		SeqDuplicacao = seqDuplicacao;
+		NumReq = numReq;
+		TipoDocumento = tipoDocumento;
+		CodigoUsuario = codigoUsuario;
+		CpfCnpj = cpfCnpj;
+		//DataEmissao = dataEmissao;
+		DataArrecadacao = dataArrecadacao;
+		DataCredito = dataCredito;
+		//ValorDocumento = valorDocumento;
+		ValorPago = valorPago;
+		FormaPagamento = formaPagamento;
+		ValorTarifa = valorTarifa;
+		
 	}
 
 	public float getCodigoLote() {
@@ -138,7 +171,7 @@ public class Dam {
 	public void setDataCredito(Calendar dataCredito) {
 
 	}
-
+/*
 	public float getValorDocumento() {
 		return 0;
 	}
@@ -146,7 +179,7 @@ public class Dam {
 	public void setValorDocumento(float valorDocumento) {
 
 	}
-
+*/
 	public float getValorPago() {
 		return 0;
 	}

@@ -1,6 +1,6 @@
 package arquivo;
 
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.List;
 
@@ -26,18 +26,20 @@ public class ConciliacaoFiles implements FileConciliacao {
 
 
 	/**
+	 * @throws FileNotFoundException 
 	 * @see arquivo.FileConciliacao#openFile(java.lang.String)
 	 */
-	public File openFile(String Path) {
-		return null;
+	public FileReader openFile(String Path) throws FileNotFoundException {
+		//TODO: Implementação openFile
+		return new FileReader(Path);
 	}
 
 
 	/**
 	 * @see arquivo.FileConciliacao#saveFile(arquivo.FileConciliacao, java.lang.String)
 	 */
-	public void saveFile(File file, String data) {
-
+	public void saveFile(FileReader file, String data) {
+		//TODO: Implementação saveFile
 	}
 
 
@@ -45,6 +47,7 @@ public class ConciliacaoFiles implements FileConciliacao {
 	 * @see arquivo.FileConciliacao#readFile(arquivo.FileConciliacao)
 	 */
 	public List<String> readFile(FileReader file) {
+		//TODO: Implementação readFile
 		return null;
 	}
 
@@ -53,6 +56,7 @@ public class ConciliacaoFiles implements FileConciliacao {
 	 * @see arquivo.FileConciliacao#moveFile(arquivo.ConciliacaoFiles, arquivo.ConciliacaoFiles)
 	 */
 	public void moveFile(ConciliacaoFiles fileIn, ConciliacaoFiles fileOut) {
+		//TODO: Implementação moveFile
 
 	}
 
