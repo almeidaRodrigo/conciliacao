@@ -1,0 +1,19 @@
+<vo.ConfigXml>
+  <userBd>rodrigo</userBd>
+  <passBd>senhaTeste</passBd>
+  <pathDam15Recebido>c:\dam15Recebido</pathDam15Recebido>
+  <pathDam15Historico>c:\dam15Historico</pathDam15Historico>
+  <pathDamDefinitivoRecebido>c:\damDefinitivoRecebido</pathDamDefinitivoRecebido>
+  <pathDamDefinitivoHistorico>c:\damDefinitivoHistorico</pathDamDefinitivoHistorico>
+  <nomeBancoConvenio>BB</nomeBancoConvenio>
+  <emailDestinoSuporte>
+    <string>suporte@juceb.ba.gov.br</string>
+  </emailDestinoSuporte>
+  <emailRemetenteSuporte>rodrigo@juceb.ba.gov.br</emailRemetenteSuporte>
+  <hostNameEmail>envio.ba.gov.br</hostNameEmail>
+  <passHostEmail></passHostEmail>
+  <smtpPort>25</smtpPort>
+  <ssl>false</ssl>
+  <userNameEmail></userNameEmail>
+  <intervaloMinutos>15</intervaloMinutos>
+</vo.ConfigXml>

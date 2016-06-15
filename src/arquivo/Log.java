@@ -13,7 +13,7 @@ public class Log extends ConciliacaoFiles {
 
 	public void MakeLog(Exception exception) throws FileNotFoundException {
 		ErrorLog erroLog = new ErrorLog(Calendar.getInstance(), exception);
-		this.saveFile(this.openFile(this.getPath()), erroLog.toString());
+		//this.saveFile(this.openFile(this.getPath()), erroLog.toString());
 		
 		
 

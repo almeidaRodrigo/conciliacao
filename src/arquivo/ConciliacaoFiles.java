@@ -1,10 +1,13 @@
 package arquivo;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
-public class ConciliacaoFiles implements FileConciliacao {
+public class ConciliacaoFiles implements IFileConciliacao {
 
 	private String Path;
 
@@ -24,27 +27,33 @@ public class ConciliacaoFiles implements FileConciliacao {
 		return null;
 	}
 
-
 	/**
 	 * @throws FileNotFoundException 
-	 * @see arquivo.FileConciliacao#openFile(java.lang.String)
+	 * @see arquivo.IFileConciliacao#openFile(java.lang.String)
 	 */
-	public FileReader openFile(String Path) throws FileNotFoundException {
-		//TODO: Implementação openFile
-		return new FileReader(Path);
+	public FileReader openFileReader() throws FileNotFoundException {
+		return new FileReader(this.getPath());
+	}
+	
+	@Override
+	public FileInputStream openFileStream() throws FileNotFoundException {
+		return new FileInputStream(this.getPath());
+		
+	}
+
+	/**
+	 * @throws IOException 
+	 * @see arquivo.IFileConciliacao#saveFile(arquivo.IFileConciliacao, java.lang.String)
+	 */
+	public void saveFile(String data, Boolean update) throws IOException {
+		FileWriter file = new FileWriter(this.getPath(), update);
+		file.write(data);
+		file.close();
 	}
 
 
 	/**
-	 * @see arquivo.FileConciliacao#saveFile(arquivo.FileConciliacao, java.lang.String)
-	 */
-	public void saveFile(FileReader file, String data) {
-		//TODO: Implementação saveFile
-	}
-
-
-	/**
-	 * @see arquivo.FileConciliacao#readFile(arquivo.FileConciliacao)
+	 * @see arquivo.IFileConciliacao#readFile(arquivo.IFileConciliacao)
 	 */
 	public List<String> readFile(FileReader file) {
 		//TODO: Implementação readFile
@@ -53,7 +62,7 @@ public class ConciliacaoFiles implements FileConciliacao {
 
 
 	/**
-	 * @see arquivo.FileConciliacao#moveFile(arquivo.ConciliacaoFiles, arquivo.ConciliacaoFiles)
+	 * @see arquivo.IFileConciliacao#moveFile(arquivo.ConciliacaoFiles, arquivo.ConciliacaoFiles)
 	 */
 	public void moveFile(ConciliacaoFiles fileIn, ConciliacaoFiles fileOut) {
 		//TODO: Implementação moveFile

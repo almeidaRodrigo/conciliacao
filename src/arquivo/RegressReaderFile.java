@@ -22,10 +22,13 @@ public class RegressReaderFile extends ConciliacaoFiles {
 	}
 	
 	private void populate() throws Exception{
+		/*
 		String linha;
 		int numSeq = 2;//Inicia em 2, pois, o sequencial de boletos despreza a linha 1 (que se refere ao cabeçalho - Header)
 		ArrayList<String> linhas = new ArrayList<>();
+		//TODO: Corrigir erro abaixo
 		FileReader arq = this.openFile(this.getPath());
+		//
 		BufferedReader lerArquivo = new BufferedReader(arq);
 		
 		linha = lerArquivo.readLine();
@@ -50,10 +53,12 @@ public class RegressReaderFile extends ConciliacaoFiles {
 			Calendar dataArrecadacao = Calendar.getInstance();
 			Calendar dataCredito = Calendar.getInstance();	
 
+			//TODO: Fazer com que estas datas recebam os parametros do arquivo XML
 			dataArrecadacao.set(Calendar.YEAR, Integer.parseInt(lin.substring(21, 24)));
 			dataArrecadacao.set(Calendar.MONTH, Integer.parseInt(lin.substring(25, 26)));
 			dataArrecadacao.set(Calendar.DAY_OF_MONTH, Integer.parseInt(lin.substring(27, 28)));
-						
+
+			//TODO: Fazer com que estas datas recebam os parametros do arquivo XML						
 			dataCredito.set(Calendar.YEAR, Integer.parseInt(lin.substring(29, 32)));
 			dataCredito.set(Calendar.MONTH, Integer.parseInt(lin.substring(33, 34)));
 			dataCredito.set(Calendar.DAY_OF_MONTH, Integer.parseInt(lin.substring(35, 36)));
@@ -78,7 +83,7 @@ public class RegressReaderFile extends ConciliacaoFiles {
 			
 			this.dams.add(dam);
 		}
-		
+		*/
 	}
 	
 	

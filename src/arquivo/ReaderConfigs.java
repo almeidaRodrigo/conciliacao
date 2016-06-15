@@ -1,6 +1,6 @@
 package arquivo;
 
-public class ReaderConfigs extends ReaderXml {
+public class ReaderConfigs extends ManipulateXml {
 
 	public ReaderConfigs() {
 
