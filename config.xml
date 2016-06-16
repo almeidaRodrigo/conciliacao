@@ -15,5 +15,7 @@
   <smtpPort>25</smtpPort>
   <ssl>false</ssl>
   <userNameEmail></userNameEmail>
+  <subjectEmail>Problemas encontrados na CONCILIACAO BANCARIA</subjectEmail>
+  <messageEmail>Mensagem inicial do email</messageEmail>
   <intervaloMinutos>15</intervaloMinutos>
 </vo.ConfigXml>

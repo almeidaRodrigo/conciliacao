@@ -25,6 +25,8 @@ public class ManipulateXml extends ConciliacaoFiles {
 	public void saveXml(Object o) throws IOException{
 		this.saveFile(new GeradorXml(o).makeXml(), false);
 	}
+	
+	
 
 
 }
