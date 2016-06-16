@@ -29,7 +29,9 @@ public class testXmlManipulation {
 					"", 
 					"25", 
 					false, 
-					"", 
+					"",
+					"Assunto do Email",
+					"Mensagem inicial do email",
 					15));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -39,7 +41,7 @@ public class testXmlManipulation {
 		
 		///*
 		try {
-			System.out.println(new ManipulateXml().openXml().getIntervaloMinutos());
+			System.out.println(new ManipulateXml().openXml().getMessageEmail());
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

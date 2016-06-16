@@ -19,5 +19,7 @@
 	<classpathentry kind="lib" path="lib/wstx-asl-3.2.7.jar"/>
 	<classpathentry kind="lib" path="lib/xom-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/xpp3_min-1.1.4c.jar"/>
+	<classpathentry kind="lib" path="lib/commons-email-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/javax.mail-1.4.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
