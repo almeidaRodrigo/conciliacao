@@ -32,12 +32,15 @@ public class ConfigXml {
 	 * @param smtpPort
 	 * @param ssl
 	 * @param userNameEmail
+	 * @param subjectEmail
+	 * @param messageEmail
 	 * @param intervaloMinutos
 	 */
 	public ConfigXml(String userBd, String passBd, String pathDam15Recebido, String pathDam15Historico,
 			String pathDamDefinitivoRecebido, String pathDamDefinitivoHistorico, String nomeBancoConvenio,
 			ArrayList<String> emailDestinoSuporte, String emailRemetenteSuporte, String hostNameEmail,
-			String passHostEmail, String smtpPort, Boolean ssl, String userNameEmail, int intervaloMinutos) {
+			String passHostEmail, String smtpPort, Boolean ssl, String userNameEmail, String subjectEmail,
+			String messageEmail, int intervaloMinutos) {
 		this.userBd = userBd;
 		this.passBd = passBd;
 		this.pathDam15Recebido = pathDam15Recebido;
@@ -52,6 +55,8 @@ public class ConfigXml {
 		this.smtpPort = smtpPort;
 		this.ssl = ssl;
 		this.userNameEmail = userNameEmail;
+		this.subjectEmail = subjectEmail;
+		this.messageEmail = messageEmail;
 		this.intervaloMinutos = intervaloMinutos;
 	}
 
@@ -94,6 +99,10 @@ public class ConfigXml {
 	
 	/** The user name email. */
 	private String userNameEmail;
+	
+	private String subjectEmail;
+	
+	private String messageEmail;
 	
 	private int intervaloMinutos;
 	
@@ -340,6 +349,34 @@ public class ConfigXml {
 	 */
 	public void setUserNameEmail(String userNameEmail) {
 		this.userNameEmail = userNameEmail;
+	}
+
+	/**
+	 * @return the subjectEmail
+	 */
+	public String getSubjectEmail() {
+		return subjectEmail;
+	}
+
+	/**
+	 * @param subjectEmail the subjectEmail to set
+	 */
+	public void setSubjectEmail(String subjectEmail) {
+		this.subjectEmail = subjectEmail;
+	}
+
+	/**
+	 * @return the messageEmail
+	 */
+	public String getMessageEmail() {
+		return messageEmail;
+	}
+
+	/**
+	 * @param messageEmail the messageEmail to set
+	 */
+	public void setMessageEmail(String messageEmail) {
+		this.messageEmail = messageEmail;
 	}
 
 	/**

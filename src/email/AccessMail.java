@@ -1,65 +1,105 @@
 package email;
 
-import arquivo.ReaderConfigs;
+import vo.ConfigXml;
 
 public class AccessMail {
 
-	private String HostName;
-
-	private int SmtpPort;
-
-	private Boolean Ssl;
-
-	private String User;
-
-	private String Pass;
-
-	public void AccessMail(ReaderConfigs readerConfigs) {
-
+	/**
+	 * @param hostName
+	 * @param smtpPort
+	 * @param ssl
+	 * @param user
+	 * @param pass
+	 */
+	public AccessMail(ConfigXml configXml) {
+		this.hostName = configXml.getHostNameEmail();
+		this.smtpPort = Integer.parseInt(configXml.getSmtpPort());
+		this.ssl = configXml.getSsl();
+		this.user = configXml.getUserNameEmail();
+		this.pass = configXml.getPassHostEmail();
 	}
 
-	public void AccessMail(String hostName, int smtpPort, Boolean ssl, String user, String pass) {
+	private String hostName;
 
-	}
+	private int smtpPort;
 
+	private Boolean ssl;
+
+	private String user;
+
+	private String pass;
+
+	/**
+	 * @return the hostName
+	 */
 	public String getHostName() {
-		return null;
+		return hostName;
 	}
 
+	/**
+	 * @param hostName the hostName to set
+	 */
 	public void setHostName(String hostName) {
-
+		this.hostName = hostName;
 	}
 
+	/**
+	 * @return the smtpPort
+	 */
 	public int getSmtpPort() {
-		return 0;
+		return smtpPort;
 	}
 
+	/**
+	 * @param smtpPort the smtpPort to set
+	 */
 	public void setSmtpPort(int smtpPort) {
-
+		this.smtpPort = smtpPort;
 	}
 
-	public boolean getSsl() {
-		return false;
+	/**
+	 * @return the ssl
+	 */
+	public Boolean getSsl() {
+		return ssl;
 	}
 
+	/**
+	 * @param ssl the ssl to set
+	 */
 	public void setSsl(Boolean ssl) {
-
+		this.ssl = ssl;
 	}
 
+	/**
+	 * @return the user
+	 */
 	public String getUser() {
-		return null;
+		return user;
 	}
 
+	/**
+	 * @param user the user to set
+	 */
 	public void setUser(String user) {
-
+		this.user = user;
 	}
 
+	/**
+	 * @return the pass
+	 */
 	public String getPass() {
-		return null;
+		return pass;
 	}
 
+	/**
+	 * @param pass the pass to set
+	 */
 	public void setPass(String pass) {
-
+		this.pass = pass;
 	}
 
+	
+
+	
 }

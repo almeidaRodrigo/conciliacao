@@ -13,13 +13,13 @@ public class ErrorLog {
 		this.error = e;
 		
 		StringBuilder message = new StringBuilder();
-		message.append("┬");
+		message.append("\r\n-\r\n");
 		message.append("|Data e hora do erro: " + this.timeError.getTime() + "\r\n");
-		message.append("|Mensagem informada pela exceção é:\r\n");
+		message.append("|Mensagem informada pelo erro:\r\n");
 		message.append("|" + this.error.getMessage() + "\r\n");
 		message.append("|Pilha do erro:\r\n");
 		message.append("|" + this.error.toString() + "\r\n");
-		message.append("┴");
+		message.append("-\r\n");
 		
 		this.stringErro = message.toString();
 		
