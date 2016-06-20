@@ -10,7 +10,7 @@ import java.util.Calendar;
  * um objeto que corresponde exatamente a todas as
  * configurações necessárias 
  * (lidas do arquivo de configuração, no diretorio do JAR)
- * e permite o acesso por meio dos getters as configurações.
+ * e permite o acesso por meio dos getters as configurações. Inclui as configurações de layout do DAM.
  * </p> 
  * <p>@author Rodrigo S Almeida - almeida.rodrigosantana at gmail.com</p>
  * <p>desenvolvida em 14/06/2016</p>
@@ -58,7 +58,12 @@ public class ConfigXml {
 		this.subjectEmail = subjectEmail;
 		this.messageEmail = messageEmail;
 		this.intervaloMinutos = intervaloMinutos;
+		
+		this.layout = new Layout();
 	}
+	
+	/** The layout Dam. */
+	private Layout layout;
 
 	/** The user bd. */
 	private String userBd;
@@ -106,6 +111,20 @@ public class ConfigXml {
 	
 	private int intervaloMinutos;
 	
+	/**
+	 * @return the layout
+	 */
+	public Layout getLayout() {
+		return layout;
+	}
+
+	/**
+	 * @param layout the layoutDam to set
+	 */
+	public void setLayout(Layout layout) {
+		this.layout = layout;
+	}
+
 	/**
 	 * Gets the user bd.
 	 *

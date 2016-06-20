@@ -15,7 +15,7 @@ public class testXmlManipulation {
 		emailDestinatarios.add("suporte@juceb.ba.gov.br");
 		
 		try {
-			new ManipulateXml().saveXml(new ConfigXml(
+			new ManipulateXml("config.xml").saveXml(new ConfigXml(
 					"rodrigo", 
 					"senhaTeste", 
 					"c:\\dam15Recebido", 
@@ -41,7 +41,7 @@ public class testXmlManipulation {
 		
 		///*
 		try {
-			System.out.println(new ManipulateXml().openXml().getMessageEmail());
+			System.out.println(new ManipulateXml("config.xml").openXml().getLayout().getLayoutDams().get(0).getColNumberEnd());
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
