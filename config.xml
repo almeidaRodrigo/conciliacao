@@ -75,10 +75,42 @@
   </layout>
   <userBd>rodrigo</userBd>
   <passBd>senhaTeste</passBd>
-  <pathDam15Recebido>c:\dam15Recebido</pathDam15Recebido>
-  <pathDam15Historico>c:\dam15Historico</pathDam15Historico>
-  <pathDamDefinitivoRecebido>c:\damDefinitivoRecebido</pathDamDefinitivoRecebido>
-  <pathDamDefinitivoHistorico>c:\damDefinitivoHistorico</pathDamDefinitivoHistorico>
+  <pathDam15Recebido class="sun.nio.fs.WindowsPath">
+    <fs>
+      <provider>
+        <theFileSystem reference="../.."/>
+      </provider>
+      <defaultDirectory>A:\workspace\conciliacao</defaultDirectory>
+      <defaultRoot>A:\</defaultRoot>
+      <supportsLinks>true</supportsLinks>
+      <supportsStreamEnumeration>true</supportsStreamEnumeration>
+    </fs>
+    <type>ABSOLUTE</type>
+    <root>c:\</root>
+    <path>c:\dam15Recebido</path>
+    <hash>0</hash>
+  </pathDam15Recebido>
+  <pathDam15Historico class="sun.nio.fs.WindowsPath">
+    <fs reference="../../pathDam15Recebido/fs"/>
+    <type>ABSOLUTE</type>
+    <root>c:\</root>
+    <path>c:\dam15Historico\2016</path>
+    <hash>0</hash>
+  </pathDam15Historico>
+  <pathDamDefinitivoRecebido class="sun.nio.fs.WindowsPath">
+    <fs reference="../../pathDam15Recebido/fs"/>
+    <type>ABSOLUTE</type>
+    <root>c:\</root>
+    <path>c:\damDefinitivoRecebido\2016</path>
+    <hash>0</hash>
+  </pathDamDefinitivoRecebido>
+  <pathDamDefinitivoHistorico class="sun.nio.fs.WindowsPath">
+    <fs reference="../../pathDam15Recebido/fs"/>
+    <type>ABSOLUTE</type>
+    <root>c:\</root>
+    <path>c:\damDefinitivoHistorico\2016</path>
+    <hash>0</hash>
+  </pathDamDefinitivoHistorico>
   <nomeBancoConvenio>BB</nomeBancoConvenio>
   <emailDestinoSuporte>
     <string>suporte@juceb.ba.gov.br</string>
@@ -91,5 +123,12 @@
   <userNameEmail></userNameEmail>
   <subjectEmail>Assunto do Email</subjectEmail>
   <messageEmail>Mensagem inicial do email</messageEmail>
-  <intervaloMinutos>15</intervaloMinutos>
+  <intervaloMilisegundos>6000</intervaloMilisegundos>
+  <pathErrorLog class="sun.nio.fs.WindowsPath">
+    <fs reference="../../pathDam15Recebido/fs"/>
+    <type>ABSOLUTE</type>
+    <root>c:\</root>
+    <path>c:\erroConciliacao.txt</path>
+    <hash>0</hash>
+  </pathErrorLog>
 </vo.ConfigXml>

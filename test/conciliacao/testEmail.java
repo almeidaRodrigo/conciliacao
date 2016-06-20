@@ -8,6 +8,7 @@ import erro.ErrorLog;
 import vo.ConfigXml;
 
 public class testEmail {
+	/*
 
 	public static void main(String[] args) {
 		
@@ -33,5 +34,6 @@ public class testEmail {
 		
 
 	}
+	*/
 
 }

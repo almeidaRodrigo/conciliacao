@@ -2,33 +2,91 @@ package arquivo;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import vo.ConfigXml;
 import vo.Dam;
 
-public class RegressReaderFile extends ConciliacaoFiles {
+public class RegressFile extends ConciliacaoFiles {
 
 	private String header;
 
 	private ArrayList<Dam> dams = new ArrayList<>();
 
 	private String footer;
+	
+	private ConfigXml configXml;
 
-	public RegressReaderFile(ReaderConfigs readerConfigs) throws Exception {
-		super(readerConfigs.getConfig("arquivoRetorno"));
+	/**
+	 * @return the header
+	 */
+	public String getHeader() {
+		return header;
+	}
+
+	/**
+	 * @param header the header to set
+	 */
+	public void setHeader(String header) {
+		this.header = header;
+	}
+
+	/**
+	 * @return the dams
+	 */
+	public ArrayList<Dam> getDams() {
+		return dams;
+	}
+
+	/**
+	 * @param dams the dams to set
+	 */
+	public void setDams(ArrayList<Dam> dams) {
+		this.dams = dams;
+	}
+
+	/**
+	 * @return the footer
+	 */
+	public String getFooter() {
+		return footer;
+	}
+
+	/**
+	 * @param footer the footer to set
+	 */
+	public void setFooter(String footer) {
+		this.footer = footer;
+	}
+
+	/**
+	 * @return the configXml
+	 */
+	public ConfigXml getConfigXml() {
+		return configXml;
+	}
+
+	/**
+	 * @param configXml the configXml to set
+	 */
+	public void setConfigXml(ConfigXml configXml) {
+		this.configXml = configXml;
+	}
+
+	public RegressFile(Path path, ConfigXml configXml) throws Exception {
+		super(path);
+		this.setConfigXml(configXml);
 		this.populate();
 	
 	}
 	
 	private void populate() throws Exception{
-		/*
 		String linha;
 		int numSeq = 2;//Inicia em 2, pois, o sequencial de boletos despreza a linha 1 (que se refere ao cabeçalho - Header)
 		ArrayList<String> linhas = new ArrayList<>();
-		//TODO: Corrigir erro abaixo
-		FileReader arq = this.openFile(this.getPath());
-		//
+		FileReader arq = this.openFileReader();
 		BufferedReader lerArquivo = new BufferedReader(arq);
 		
 		linha = lerArquivo.readLine();
@@ -41,6 +99,7 @@ public class RegressReaderFile extends ConciliacaoFiles {
 				linhas.add(linha);
 			}
 		}else{
+			//TODO: Adcionar o nome do arquivo a Exception abaixo.
 			NullPointerException ex = new NullPointerException("O arquivo de retorno está vazio ou não foi reconhecido. Por favor verifique o arquivo!");
 			throw ex;
 		}
@@ -83,7 +142,7 @@ public class RegressReaderFile extends ConciliacaoFiles {
 			
 			this.dams.add(dam);
 		}
-		*/
+		
 	}
 	
 	

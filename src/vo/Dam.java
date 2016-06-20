@@ -1,7 +1,7 @@
 package vo;
 
 import java.util.Calendar;
-import arquivo.RegressReaderFile;
+import arquivo.RegressFile;
 
 public class Dam {
 

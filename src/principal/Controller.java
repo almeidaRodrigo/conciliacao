@@ -1,21 +1,30 @@
 package principal;
 
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
 
 import arquivo.Log;
-import arquivo.ReaderConfigs;
+import arquivo.ManipulateXml;
+import vo.ConfigXml;
 
 public class Controller {
-
-	private ReaderConfigs readerConfigs;
+	
+	private Path path;
+	private ConfigXml configXml;
 	private Log log;
 
-	public ReaderConfigs getReaderConfigs() {
-		return readerConfigs;
+	/**
+	 * @return the configXml
+	 */
+	public ConfigXml getConfigXml() {
+		return configXml;
 	}
 
-	public void setReaderConfigs(ReaderConfigs readerConfigs) {
-		this.readerConfigs = readerConfigs;
+	/**
+	 * @param configXml the configXml to set
+	 */
+	public void setConfigXml(ConfigXml configXml) {
+		this.configXml = configXml;
 	}
 
 	public Log getLog() {
@@ -26,29 +35,22 @@ public class Controller {
 		this.log = log;
 	}
 
-	public Controller() throws InterruptedException {
-		this.setReaderConfigs(new ReaderConfigs(null));
-		this.setLog(new Log(this.getReaderConfigs()));
+	public Controller(Path configPath, Path logPath) throws FileNotFoundException, InterruptedException  {
+		this.setConfigXml((ConfigXml) new ManipulateXml(configPath).openXml());
+		this.setLog(new Log(this.configXml.getPathErrorLog()));
 		
 		while(true){
-			try {
-				Thread.sleep(Long.parseLong(getReaderConfigs().getConfig("tempoEspera")));
-				this.run();
-			} catch (Exception e) {
-				try {
-					this.log.MakeLog(e);
-				} catch (FileNotFoundException e1) {
-					//TODO: disparar email
-				}
-			}finally {
-				Thread.sleep(7200000);
-			}
+			System.out.println("Inciciando aguarde...");
+			Thread.sleep(this.configXml.getIntervaloMilisegundos());
+			System.out.println("...finalizado!");
+			this.run();
 		}
-
 	}
 
 	private void run() {
-
+		//TODO: Regra de instanciação de DAM, tratamento / validação, processamento, Inserção em Banco de dados e remoção do arquivo para pasta de historico.
+		System.out.println("Entrou");
+		System.exit(0);
 	}
 
 }

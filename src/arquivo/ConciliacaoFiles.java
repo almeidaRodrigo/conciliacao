@@ -5,22 +5,23 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 
 public class ConciliacaoFiles implements IFileConciliacao {
 
-	private String Path;
+	private Path path;
 
-	public ConciliacaoFiles(String path) {
+	public ConciliacaoFiles(Path path) {
 		this.setPath(path);
 	}
 
-	public String getPath() {
-		return Path;
+	public Path getPath() {
+		return this.path;
 	}
 
-	public void setPath(String path) {
-		Path = path;
+	public void setPath(Path path) {
+		this.path = path;
 	}
 
 	public Boolean isDirEmpty() {
@@ -32,12 +33,12 @@ public class ConciliacaoFiles implements IFileConciliacao {
 	 * @see arquivo.IFileConciliacao#openFile(java.lang.String)
 	 */
 	public FileReader openFileReader() throws FileNotFoundException {
-		return new FileReader(this.getPath());
+		return new FileReader(this.getPath().toString());
 	}
 	
 	@Override
 	public FileInputStream openFileStream() throws FileNotFoundException {
-		return new FileInputStream(this.getPath());
+		return new FileInputStream(this.getPath().toString());
 		
 	}
 
@@ -46,7 +47,7 @@ public class ConciliacaoFiles implements IFileConciliacao {
 	 * @see arquivo.IFileConciliacao#saveFile(arquivo.IFileConciliacao, java.lang.String)
 	 */
 	public void saveFile(String data, Boolean update) throws IOException {
-		FileWriter file = new FileWriter(this.getPath(), update);
+		FileWriter file = new FileWriter(this.getPath().toString(), update);
 		file.write(data);
 		file.close();
 	}
