@@ -36,6 +36,10 @@ public class Dam {
 	private String FormaPagamento;
 
 	private float ValorTarifa;
+	
+	public Dam(){
+		
+	}
 
 	/**
 	 * @param codigoLote
