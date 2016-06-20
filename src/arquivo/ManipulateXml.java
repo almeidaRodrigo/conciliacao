@@ -1,5 +1,6 @@
 package arquivo;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import com.thoughtworks.xstream.XStream;
@@ -12,9 +13,9 @@ import xml.GeradorXml;
 
 public class ManipulateXml extends ConciliacaoFiles {
 
-	public ManipulateXml() {
+	public ManipulateXml(String fileName) {
 		//Efetua a leitura do arquivo config.xml dentro da pasta do arquivo JAR (executavel deste projeto)
-		super(System.getProperty("user.dir") + "\\config.xml");
+		super(System.getProperty("user.dir") + File.separator + fileName);
 
 	}
 

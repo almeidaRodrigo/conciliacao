@@ -27,7 +27,7 @@ public class Controller {
 	}
 
 	public Controller() throws InterruptedException {
-		this.setReaderConfigs(new ReaderConfigs());
+		this.setReaderConfigs(new ReaderConfigs(null));
 		this.setLog(new Log(this.getReaderConfigs()));
 		
 		while(true){
