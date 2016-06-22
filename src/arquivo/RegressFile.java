@@ -2,12 +2,17 @@ package arquivo;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import com.thoughtworks.xstream.converters.reflection.FieldDictionary;
+
 import vo.ConfigXml;
 import vo.Dam;
+import vo.Layout;
+import vo.LayoutDam;
 
 public class RegressFile extends ConciliacaoFiles {
 
@@ -99,16 +104,49 @@ public class RegressFile extends ConciliacaoFiles {
 				linhas.add(linha);
 			}
 		}else{
-			//TODO: Adcionar o nome do arquivo a Exception abaixo.
-			NullPointerException ex = new NullPointerException("O arquivo de retorno está vazio ou não foi reconhecido. Por favor verifique o arquivo!");
+			
+			NullPointerException ex = new NullPointerException("O arquivo de retorno está vazio, sem o Header ou não foi reconhecido. "
+					+ "Por favor verifique o arquivo: "
+					+ this.getName());
 			throw ex;
 		}
+		//--
+		Field[] fieldsDam = new Dam().getClass().getDeclaredFields();
+		Layout layout = new Layout();
+		//--
 		
 		this.footer = linhas.get(linhas.lastIndexOf(linhas));
 		
 		linhas.remove(linhas.lastIndexOf(linhas));
 		
 		for (String lin : linhas) {
+			//TODO: implementar a leitura abstrata de campos efetuando busca com o metodo getColStartEndByAttribute da classe Layout
+			for(int i =0;i < fieldsDam.length; i++){
+				int colRange[] = layout.getColStartEndByAttribute(fieldsDam[i].getName());
+				
+				String className = fieldsDam[i].getType().getName();
+				
+				System.out.println(className);
+				System.exit(0);
+				
+				switch (className) {
+				case "":
+					
+					break;
+
+				default:
+					fieldsDam[i].set(fieldsDam[i], lin.substring(colRange[0], colRange[1]));
+					break;
+				}
+				
+				
+				
+				
+			
+			}
+			
+			
+			
 			Calendar dataArrecadacao = Calendar.getInstance();
 			Calendar dataCredito = Calendar.getInstance();	
 

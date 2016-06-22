@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import arquivo.ManipulateXml;
 import vo.ConfigXml;
 
-public class testXmlManipulation {
-	
+public class TestXmlManipulation {
+	/*
 
 	public static void main(String[] args) {
 		
@@ -53,6 +53,6 @@ public class testXmlManipulation {
 		
 
 	}
-	
+	*/
 
 }

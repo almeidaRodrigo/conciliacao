@@ -6,7 +6,7 @@ import arquivo.ManipulateXml;
 import vo.Layout;
 
 
-public class testLayoutDam {
+public class TestLayoutDam {
 	/*
 	public static void main(String[] args) {
 		

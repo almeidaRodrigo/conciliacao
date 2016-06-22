@@ -1,5 +1,6 @@
 package arquivo;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,24 +9,12 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
-public class ConciliacaoFiles implements IFileConciliacao {
-
-	private Path path;
-
+public class ConciliacaoFiles extends File implements IFileConciliacao {
+	
+	private static final long serialVersionUID = 721790979662936626L;
+		
 	public ConciliacaoFiles(Path path) {
-		this.setPath(path);
-	}
-
-	public Path getPath() {
-		return this.path;
-	}
-
-	public void setPath(Path path) {
-		this.path = path;
-	}
-
-	public Boolean isDirEmpty() {
-		return null;
+		super(path.toUri());
 	}
 
 	/**
@@ -52,21 +41,12 @@ public class ConciliacaoFiles implements IFileConciliacao {
 		file.close();
 	}
 
-
 	/**
-	 * @see arquivo.IFileConciliacao#readFile(arquivo.IFileConciliacao)
-	 */
-	public List<String> readFile(FileReader file) {
-		//TODO: Implementação readFile
-		return null;
-	}
-
-
-	/**
+	 * @return 
 	 * @see arquivo.IFileConciliacao#moveFile(arquivo.ConciliacaoFiles, arquivo.ConciliacaoFiles)
 	 */
-	public void moveFile(ConciliacaoFiles fileIn, ConciliacaoFiles fileOut) {
-		//TODO: Implementação moveFile
+	public boolean moveFile(ConciliacaoFiles fileIn, ConciliacaoFiles fileOut) {
+		return fileIn.renameTo(fileOut);
 
 	}
 

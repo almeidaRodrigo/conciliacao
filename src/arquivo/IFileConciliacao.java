@@ -14,8 +14,6 @@ public interface IFileConciliacao {
 
 	public void saveFile(String data, Boolean update) throws IOException;
 
-	public List<String> readFile(FileReader file);
-
-	public void moveFile(ConciliacaoFiles fileIn, ConciliacaoFiles fileOut);
+	public boolean moveFile(ConciliacaoFiles fileIn, ConciliacaoFiles fileOut);
 
 }
