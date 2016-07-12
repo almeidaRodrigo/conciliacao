@@ -62,7 +62,6 @@ public class ConfigXml {
 		this.intervaloMilisegundos = intervaloMilisegundos;
 		this.setPathErrorLog(pathErrorLog);
 		
-		
 		this.layout = new Layout();
 	}
 	

@@ -3,8 +3,8 @@
     <layoutDams>
       <vo.LayoutDam>
         <attributeName>CodigoLote</attributeName>
-        <colNumberStart>0</colNumberStart>
-        <colNumberEnd>0</colNumberEnd>
+        <colNumberStart>73</colNumberStart>
+        <colNumberEnd>79</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>NumSeq</attributeName>
@@ -13,13 +13,13 @@
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>CodigoAgencia</attributeName>
-        <colNumberStart>0</colNumberStart>
-        <colNumberEnd>0</colNumberEnd>
+        <colNumberStart>107</colNumberStart>
+        <colNumberEnd>115</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>NumDam</attributeName>
-        <colNumberStart>0</colNumberStart>
-        <colNumberEnd>0</colNumberEnd>
+        <colNumberStart>60</colNumberStart>
+        <colNumberEnd>67</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>SeqDuplicacao</attributeName>
@@ -48,8 +48,8 @@
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>DataArrecadacao</attributeName>
-        <colNumberStart>0</colNumberStart>
-        <colNumberEnd>0</colNumberEnd>
+        <colNumberStart>21</colNumberStart>
+        <colNumberEnd>29</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>DataCredito</attributeName>

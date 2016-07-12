@@ -1,41 +1,40 @@
 package vo;
 
 import java.util.Calendar;
-import arquivo.RegressFile;
 
 public class Dam {
 
-	private int CodigoLote;
+	public int CodigoLote;
 
-	private int NumSeq;
+	public int NumSeq;
 
-	private String CodigoAgencia;
+	public String CodigoAgencia;
 
-	private String NumDam;
+	public String NumDam;
 
-	private int SeqDuplicacao;
+	public int SeqDuplicacao;
 
-	private int NumReq;
+	public int NumReq;
 
-	private String TipoDocumento;
+	public String TipoDocumento;
 
-	private String CodigoUsuario;
+	public String CodigoUsuario;
 
-	private String CpfCnpj;
+	public String CpfCnpj;
 
 	//private Calendar DataEmissao;
 
-	private Calendar DataArrecadacao;
+	public Calendar DataArrecadacao;
 
-	private Calendar DataCredito;
+	public Calendar DataCredito;
 
 	//private float ValorDocumento;
 
-	private float ValorPago;
+	public float ValorPago;
 
-	private String FormaPagamento;
+	public String FormaPagamento;
 
-	private float ValorTarifa;
+	public float ValorTarifa;
 	
 	public Dam(){
 		
@@ -80,16 +79,16 @@ public class Dam {
 		
 	}
 
-	public float getCodigoLote() {
-		return 0;
+	public int getCodigoLote() {
+		return this.CodigoLote;
 	}
 
 	public void setCodigoLote(int codigoLote) {
 
 	}
 
-	public void getNumSeq() {
-
+	public int getNumSeq() {
+		return this.NumSeq;
 	}
 
 	public void setNumSeq(float numSeq) {
@@ -97,7 +96,7 @@ public class Dam {
 	}
 
 	public String getCodigoAgencia() {
-		return null;
+		return this.CodigoAgencia;
 	}
 
 	public void setCodigoAgencia(String codigoAgencia) {
@@ -105,7 +104,7 @@ public class Dam {
 	}
 
 	public String getNumDam() {
-		return null;
+		return this.NumDam;
 	}
 
 	public void setNumDam(String numDam) {
