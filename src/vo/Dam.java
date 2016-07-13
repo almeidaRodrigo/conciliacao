@@ -7,12 +7,12 @@ public class Dam {
 	public int CodigoLote;
 
 	public int NumSeq;
+	
+	public int SeqDuplicacao;
 
 	public String CodigoAgencia;
 
 	public String NumDam;
-
-	public int SeqDuplicacao;
 
 	public int NumReq;
 
@@ -112,7 +112,7 @@ public class Dam {
 	}
 
 	public int getSeqDuplicacao() {
-		return 0;
+		return this.SeqDuplicacao;
 	}
 
 	public void setSeqDuplicacao(int seqDuplicacao) {
@@ -136,7 +136,7 @@ public class Dam {
 	}
 
 	public String getCodigoUsuario() {
-		return null;
+		return this.CodigoUsuario;
 	}
 
 	public void setCodigoUsuario(String codigoUsuario) {
@@ -160,7 +160,7 @@ public class Dam {
 	}
 
 	public Calendar getDataArrecadacao() {
-		return null;
+		return this.DataArrecadacao;
 	}
 
 	public void setDataArrecadacao(Calendar dataArrecadacao) {

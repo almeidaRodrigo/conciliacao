@@ -9,6 +9,8 @@ import java.util.Calendar;
 
 import com.thoughtworks.xstream.converters.reflection.FieldDictionary;
 
+import conexao.OracleConnection;
+import dao.DamDao;
 import vo.ConfigXml;
 import vo.Dam;
 import vo.Layout;
@@ -96,12 +98,18 @@ public class RegressFile extends ConciliacaoFiles {
 	}
 	
 	private void populate() throws Exception{
-		String linha;
 		/*
-		 * Inicia em 1, pois, o sequencial de boletos despreza a linha 0 (que se refere ao cabeçalho - Header).
+		 * numSeq: Inicia em 1, pois, o sequencial de boletos despreza a linha 0 (que se refere ao cabeçalho - Header).
 		 * É o numero sequencial das linhas do arquivo, correspondente a cada pagamento.
 		 */
 		int numSeq = 1;
+		
+		/*
+		 * seqDuplicacao: resultado do contador na tabela do dam. É o valor correspondente da quantidade de vezes da ocorrencia do DAM.
+		 */
+		int seqDuplicacao;
+		
+		String linha;
 		ArrayList<String> linhas = new ArrayList<>();
 		int colRange[];
 		Dam dam = new Dam();
@@ -145,38 +153,49 @@ public class RegressFile extends ConciliacaoFiles {
 			colRange = this.configXml.getLayout().getColStartEndByAttribute(fieldsDam[1].getName());
 			dam.getClass().getField(fieldsDam[1].getName()).set(dam, numSeq);
 			//-Fim numSeq
+
+			//Efetua a captura do SeqDuplicacao EXCLUSIVAMENTE via consulta a tabela do dam.
+			colRange = this.configXml.getLayout().getColStartEndByAttribute("NumDam");
+			seqDuplicacao = new DamDao(OracleConnection.connect(this.configXml)).countDam15(lin.substring(colRange[0], colRange[1]));
+			dam.getClass().getField(fieldsDam[2].getName()).set(dam, seqDuplicacao);
+			//-Fim SeqDuplicacao
 			
-			//System.out.println(dam.getCodigoLote());
-			//System.out.println(dam.getNumSeq());
-			//System.out.println("---");
-			
-			
-			for(int i = 2;i < fieldsDam.length; i++){
+			for(int i = 3;i < fieldsDam.length; i++){
 				colRange = this.configXml.getLayout().getColStartEndByAttribute(fieldsDam[i].getName());
+				//System.out.println(fieldsDam.length);
+				//System.out.println(i);
+				
 				
 				switch (fieldsDam[i].getType().getName().trim()) {
 				case "int":
-					dam.getClass().getField(fieldsDam[i].getName()).set(dam, Integer.parseInt(lin.substring(colRange[0], colRange[1])));
+					dam.getClass().getField(fieldsDam[i].getName()).set(dam, Integer.parseInt((lin.substring(colRange[0], colRange[1]).isEmpty()?"0":lin.substring(colRange[0], colRange[1]))));
 					break;
 				case "java.lang.String":
 					dam.getClass().getField(fieldsDam[i].getName()).set(dam, lin.substring(colRange[0], colRange[1]).trim());
 					break;
+				case "java.util.Calendar":
+					Calendar c = Calendar.getInstance();
+					c.set(Integer.parseInt(lin.substring(colRange[0], colRange[1]).trim().substring(0, 4)), 
+							Integer.parseInt(lin.substring(colRange[0], colRange[1]).trim().substring(4, 6)), 
+							Integer.parseInt(lin.substring(colRange[0], colRange[1]).trim().substring(6, 8)));
+					dam.getClass().getField(fieldsDam[i].getName()).set(dam, c);
+					break;
 				}
 				
-				if(i == 3){
+				if(i == 9){
+					System.out.println("QTD de indices: " + fieldsDam.length);
+					System.out.println("Indice atual: " + i);
 					System.out.println(fieldsDam[i].getName());
 					//System.out.println(lin.substring(colRange[0], colRange[1]).trim());
+					System.out.println(lin.substring(colRange[0], colRange[1]).trim().substring(6, 8));
 					System.out.println(fieldsDam[i].getType().getName().trim());
-					System.out.println(dam.getNumDam());
+					System.out.println(dam.getDataArrecadacao());
 					System.out.println("-");
+					
+					
 					System.exit(0);
 				}
-				//Proximo passo: Fazer a verificação em banco do SeqDuplicação, que é, 
-				//verificar se o numero do DAM ja foi inserido e a quantidade de vezes, se for maior que 0, somar mais 1. Este será o SeqDuplicacao. 
-					
 				
-				
-
 			
 			}
 			

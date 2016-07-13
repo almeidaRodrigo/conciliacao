@@ -12,6 +12,11 @@
         <colNumberEnd>0</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
+        <attributeName>SeqDuplicacao</attributeName>
+        <colNumberStart>0</colNumberStart>
+        <colNumberEnd>0</colNumberEnd>
+      </vo.LayoutDam>
+      <vo.LayoutDam>
         <attributeName>CodigoAgencia</attributeName>
         <colNumberStart>107</colNumberStart>
         <colNumberEnd>115</colNumberEnd>
@@ -20,11 +25,6 @@
         <attributeName>NumDam</attributeName>
         <colNumberStart>60</colNumberStart>
         <colNumberEnd>67</colNumberEnd>
-      </vo.LayoutDam>
-      <vo.LayoutDam>
-        <attributeName>SeqDuplicacao</attributeName>
-        <colNumberStart>0</colNumberStart>
-        <colNumberEnd>0</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>NumReq</attributeName>
@@ -38,8 +38,8 @@
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>CodigoUsuario</attributeName>
-        <colNumberStart>0</colNumberStart>
-        <colNumberEnd>0</colNumberEnd>
+        <colNumberStart>67</colNumberStart>
+        <colNumberEnd>79</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>CpfCnpj</attributeName>
@@ -73,8 +73,12 @@
       </vo.LayoutDam>
     </layoutDams>
   </layout>
-  <userBd>rodrigo</userBd>
-  <passBd>senhaTeste</passBd>
+  <userBd>*****</userBd>
+  <passBd>*****</passBd>
+  <hostBd>*****</hostBd>
+  <tipoBanco>oracle</tipoBanco>
+  <portaBanco>1521</portaBanco>
+  <nomeServicoBanco>prod</nomeServicoBanco>
   <pathDam15Recebido class="sun.nio.fs.WindowsPath">
     <fs>
       <provider>
@@ -116,7 +120,7 @@
     <string>suporte@juceb.ba.gov.br</string>
   </emailDestinoSuporte>
   <emailRemetenteSuporte>rodrigo@juceb.ba.gov.br</emailRemetenteSuporte>
-  <hostNameEmail>envio.ba.gov.br</hostNameEmail>
+  <hostNameEmail>*****</hostNameEmail>
   <passHostEmail></passHostEmail>
   <smtpPort>25</smtpPort>
   <ssl>false</ssl>

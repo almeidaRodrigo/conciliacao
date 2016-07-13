@@ -10,7 +10,7 @@ import arquivo.ManipulateXml;
 import vo.ConfigXml;
 
 public class TestXmlManipulation {
-	/*
+	
 
 	public static void main(String[] args) {
 		
@@ -21,6 +21,10 @@ public class TestXmlManipulation {
 			new ManipulateXml(FileSystems.getDefault().getPath(System.getProperty("user.dir"), File.separator, "config.xml")).saveXml(new ConfigXml(
 					"rodrigo", 
 					"senhaTeste", 
+					"10.57.0.106",
+					"oracle",
+					1521,
+					"prod",
 					"c:\\dam15Recebido", 
 					"c:\\dam15Historico",
 					"c:\\damDefinitivoRecebido", 
@@ -53,6 +57,6 @@ public class TestXmlManipulation {
 		
 
 	}
-	*/
+	
 
 }

@@ -38,13 +38,21 @@ public class ConfigXml {
 	 * @param messageEmail
 	 * @param intervaloMilisegundos
 	 */
-	public ConfigXml(String userBd, String passBd, String pathDam15Recebido, String pathDam15Historico,
+	public ConfigXml(String userBd, String passBd, String hostBd, String tipoBanco, int portaBanco, 
+			String nomeServicoBanco, String pathDam15Recebido, String pathDam15Historico,
 			String pathDamDefinitivoRecebido, String pathDamDefinitivoHistorico, String nomeBancoConvenio,
 			ArrayList<String> emailDestinoSuporte, String emailRemetenteSuporte, String hostNameEmail,
 			String passHostEmail, String smtpPort, Boolean ssl, String userNameEmail, String subjectEmail,
 			String messageEmail, Long intervaloMilisegundos, String pathErrorLog) {
+		
+		this.layout = new Layout();
+		
 		this.userBd = userBd;
 		this.passBd = passBd;
+		this.hostBd = hostBd;
+		this.tipoBanco = tipoBanco;
+		this.portaBanco = portaBanco;
+		this.nomeServicoBanco = nomeServicoBanco;
 		this.setPathDam15Recebido(pathDam15Recebido);
 		this.setPathDam15Historico(pathDam15Historico);
 		this.setPathDamDefinitivoRecebido(pathDamDefinitivoRecebido);
@@ -62,7 +70,6 @@ public class ConfigXml {
 		this.intervaloMilisegundos = intervaloMilisegundos;
 		this.setPathErrorLog(pathErrorLog);
 		
-		this.layout = new Layout();
 	}
 	
 	/** The layout Dam. */
@@ -73,6 +80,18 @@ public class ConfigXml {
 	
 	/** The pass bd. */
 	private String passBd;
+	
+	/** The host bd. */
+	private String hostBd;
+	
+	/** The tipo banco. */
+	private String tipoBanco;
+	
+	/** The porta banco. */
+	private int portaBanco;
+	
+	/** The nome servico banco. */
+	private String nomeServicoBanco;
 	
 	/** The path dam recebido. */
 	private Path pathDam15Recebido;
@@ -115,7 +134,7 @@ public class ConfigXml {
 	private Long intervaloMilisegundos;
 	
 	private Path pathErrorLog;
-	
+		
 	/**
 	 * @return the layout
 	 */
@@ -166,6 +185,62 @@ public class ConfigXml {
 		this.passBd = passBd;
 	}
 	
+	/**
+	 * @return the hostBd
+	 */
+	public String getHostBd() {
+		return hostBd;
+	}
+
+	/**
+	 * @param hostBd the hostBd to set
+	 */
+	public void setHostBd(String hostBd) {
+		this.hostBd = hostBd;
+	}
+
+	/**
+	 * @return the tipoBanco
+	 */
+	public String getTipoBanco() {
+		return tipoBanco;
+	}
+
+	/**
+	 * @param tipoBanco the tipoBanco to set
+	 */
+	public void setTipoBanco(String tipoBanco) {
+		this.tipoBanco = tipoBanco;
+	}
+
+	/**
+	 * @return the portaBanco
+	 */
+	public int getPortaBanco() {
+		return portaBanco;
+	}
+
+	/**
+	 * @param portaBanco the portaBanco to set
+	 */
+	public void setPortaBanco(int portaBanco) {
+		this.portaBanco = portaBanco;
+	}
+
+	/**
+	 * @return the nomeServicoBanco
+	 */
+	public String getNomeServicoBanco() {
+		return nomeServicoBanco;
+	}
+
+	/**
+	 * @param nomeServicoBanco the nomeServicoBanco to set
+	 */
+	public void setNomeServicoBanco(String nomeServicoBanco) {
+		this.nomeServicoBanco = nomeServicoBanco;
+	}
+
 	/**
 	 * Gets the path dam recebido.
 	 *
