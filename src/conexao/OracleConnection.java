@@ -11,7 +11,7 @@ import vo.ConfigXml;
  * @author rodrigo
  *
  */
-public class OracleConnection {
+public abstract class OracleConnection {
 		
 	/**
 	 * @param configXml

@@ -58,24 +58,24 @@
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>ValorPago</attributeName>
-        <colNumberStart>0</colNumberStart>
-        <colNumberEnd>0</colNumberEnd>
+        <colNumberStart>81</colNumberStart>
+        <colNumberEnd>93</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>FormaPagamento</attributeName>
-        <colNumberStart>0</colNumberStart>
-        <colNumberEnd>0</colNumberEnd>
+        <colNumberStart>116</colNumberStart>
+        <colNumberEnd>117</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>ValorTarifa</attributeName>
-        <colNumberStart>0</colNumberStart>
-        <colNumberEnd>0</colNumberEnd>
+        <colNumberStart>93</colNumberStart>
+        <colNumberEnd>100</colNumberEnd>
       </vo.LayoutDam>
     </layoutDams>
   </layout>
-  <userBd>*****</userBd>
-  <passBd>*****</passBd>
-  <hostBd>*****</hostBd>
+  <userBd>rodrigo</userBd>
+  <passBd>---</passBd>
+  <hostBd>---</hostBd>
   <tipoBanco>oracle</tipoBanco>
   <portaBanco>1521</portaBanco>
   <nomeServicoBanco>prod</nomeServicoBanco>

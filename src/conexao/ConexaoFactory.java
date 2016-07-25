@@ -50,7 +50,11 @@ public class ConexaoFactory {
 				Class.forName("com.mysql.jdbc.Driver");
 				ConexaoFactory.driver = "jdbc:" + ConexaoFactory.driver + "://";
 				break;
-
+				
+			case "sqlserver":
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				ConexaoFactory.driver = "jdbc:" + ConexaoFactory.driver + "://";
+				break;
 			}
 
 			ConexaoFactory.urlBuilder.append(ConexaoFactory.driver + ConexaoFactory.host);

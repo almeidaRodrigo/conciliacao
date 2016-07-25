@@ -32,7 +32,7 @@ public class Dam {
 
 	public float ValorPago;
 
-	public String FormaPagamento;
+	public int FormaPagamento;
 
 	public float ValorTarifa;
 	
@@ -59,7 +59,7 @@ public class Dam {
 	 */
 	public Dam(int codigoLote, int numSeq, String codigoAgencia, String numDam, int seqDuplicacao, int numReq,
 			String tipoDocumento, String codigoUsuario, String cpfCnpj, Calendar dataArrecadacao,
-			Calendar dataCredito, float valorPago, String formaPagamento, float valorTarifa) {
+			Calendar dataCredito, float valorPago, int formaPagamento, float valorTarifa) {
 		CodigoLote = codigoLote;
 		NumSeq = numSeq;
 		CodigoAgencia = codigoAgencia;
@@ -168,11 +168,11 @@ public class Dam {
 	}
 
 	public Calendar getDataCredito() {
-		return null;
+		return this.DataCredito;
 	}
 
 	public void setDataCredito(Calendar dataCredito) {
-
+		this.DataCredito = dataCredito;
 	}
 /*
 	public float getValorDocumento() {
@@ -184,27 +184,27 @@ public class Dam {
 	}
 */
 	public float getValorPago() {
-		return 0;
+		return this.ValorPago;
 	}
 
 	public void setValorPago(float valorPago) {
 
 	}
 
-	public String getFormaPagamento() {
-		return null;
+	public int getFormaPagamento() {
+		return this.FormaPagamento;
 	}
 
-	public void setFormaPagamento(String formaPagamento) {
-
+	public void setFormaPagamento(int formaPagamento) {
+		this.FormaPagamento = formaPagamento;
 	}
 
 	public float getValorTarifa() {
-		return 0;
+		return this.ValorTarifa;
 	}
 
 	public void setValorTarifa(float valorTarifa) {
-
+		this.ValorTarifa = valorTarifa;
 	}
 
 }

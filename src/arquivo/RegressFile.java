@@ -84,11 +84,8 @@ public class RegressFile extends ConciliacaoFiles {
 
 	public RegressFile(Path path, ConfigXml configXml) throws Exception {
 		super(path);
-		System.out.println("Teste de entrada no construtor - Ok a1");
 		this.setConfigXml(configXml);
-		System.out.println("Teste de entrada no construtor - Ok a2");
 		this.populate();
-		System.out.println("Teste de entrada no construtor - Ok a3");
 	
 	}
 	
@@ -111,8 +108,8 @@ public class RegressFile extends ConciliacaoFiles {
 		
 		String linha;
 		ArrayList<String> linhas = new ArrayList<>();
-		int colRange[];
-		Dam dam = new Dam();
+		
+		Field[] fieldsDam = new Dam().getClass().getDeclaredFields();
 		
 		FileReader arq = this.openFileReader();
 		BufferedReader lerArquivo = new BufferedReader(arq);
@@ -133,16 +130,22 @@ public class RegressFile extends ConciliacaoFiles {
 					+ this.getName());
 			throw ex;
 		}
-		//--
-		Field[] fieldsDam = new Dam().getClass().getDeclaredFields();
-		//--
 		
-		this.footer = linhas.get(linhas.size() - 1);
-		linhas.remove(linhas.size() - 1);
+		for(int index = 1; index < linhas.size(); index++){
+			String idFooter = linhas.get(linhas.size() - 1);
+			
+			if(idFooter != null && idFooter.substring(0,1).equals("Z")){
+				this.footer = idFooter;
+				linhas.remove(linhas.size() - 1);
+				break;
+			}
 
-		//-- 11/07/2016	
+			linhas.remove(linhas.size() - 1);
+		}
+
 		for (String lin : linhas) {
-			//TODO: implementar a leitura abstrata de campos efetuando busca com o metodo getColStartEndByAttribute da classe Layout
+			int colRange[];
+			Dam dam = new Dam();
 			
 			//Efetua a captura do codigoLote EXCLUSIVAMENTE no cabeçalho do arquivo.
 			colRange = this.configXml.getLayout().getColStartEndByAttribute(fieldsDam[0].getName());
@@ -160,87 +163,41 @@ public class RegressFile extends ConciliacaoFiles {
 			dam.getClass().getField(fieldsDam[2].getName()).set(dam, seqDuplicacao);
 			//-Fim SeqDuplicacao
 			
-			for(int i = 3;i < fieldsDam.length; i++){
-				colRange = this.configXml.getLayout().getColStartEndByAttribute(fieldsDam[i].getName());
-				//System.out.println(fieldsDam.length);
-				//System.out.println(i);
+			for(int index = 3;index < fieldsDam.length; index++){
+				colRange = this.configXml.getLayout().getColStartEndByAttribute(fieldsDam[index].getName());
+				String dadoCampo = lin.substring(colRange[0], colRange[1]).trim();
 				
-				
-				switch (fieldsDam[i].getType().getName().trim()) {
-				case "int":
-					dam.getClass().getField(fieldsDam[i].getName()).set(dam, Integer.parseInt((lin.substring(colRange[0], colRange[1]).isEmpty()?"0":lin.substring(colRange[0], colRange[1]))));
-					break;
-				case "java.lang.String":
-					dam.getClass().getField(fieldsDam[i].getName()).set(dam, lin.substring(colRange[0], colRange[1]).trim());
-					break;
-				case "java.util.Calendar":
-					Calendar c = Calendar.getInstance();
-					c.set(Integer.parseInt(lin.substring(colRange[0], colRange[1]).trim().substring(0, 4)), 
-							Integer.parseInt(lin.substring(colRange[0], colRange[1]).trim().substring(4, 6)), 
-							Integer.parseInt(lin.substring(colRange[0], colRange[1]).trim().substring(6, 8)));
-					dam.getClass().getField(fieldsDam[i].getName()).set(dam, c);
-					break;
+				if(colRange[0] != 0 && colRange[1] != 0 && !dadoCampo.isEmpty()){
+					switch (fieldsDam[index].getType().getName().trim()) {
+						case "int":
+							dam.getClass().getField(fieldsDam[index].getName()).set(dam, Integer.parseInt(dadoCampo));
+							break;
+						case "float":
+							 //Efetua a captura do float consideranco que os 2 ultimos caracteres da String serão as casas decimais.
+							dam.getClass().getField(fieldsDam[index].getName()).set(dam, 
+									Float.parseFloat(
+											dadoCampo.substring(0, 
+															dadoCampo.length()-2)+"."+dadoCampo.substring(dadoCampo.length()-2, dadoCampo.length())));
+							break;
+						case "java.lang.String":
+							dam.getClass().getField(fieldsDam[index].getName()).set(dam, dadoCampo);
+							break;
+						case "java.util.Calendar":
+							Calendar c = Calendar.getInstance();
+							c.set(Integer.parseInt(dadoCampo.substring(0, 4)), 
+									Integer.parseInt(dadoCampo.substring(4, 6)) -1, 
+									Integer.parseInt(dadoCampo.substring(6, 8)));
+							
+							dam.getClass().getField(fieldsDam[index].getName()).set(dam, c);
+							break;
+					}
 				}
-				
-				if(i == 9){
-					System.out.println("QTD de indices: " + fieldsDam.length);
-					System.out.println("Indice atual: " + i);
-					System.out.println(fieldsDam[i].getName());
-					//System.out.println(lin.substring(colRange[0], colRange[1]).trim());
-					System.out.println(lin.substring(colRange[0], colRange[1]).trim().substring(6, 8));
-					System.out.println(fieldsDam[i].getType().getName().trim());
-					System.out.println(dam.getDataArrecadacao());
-					System.out.println("-");
-					
-					
-					System.exit(0);
-				}
-				
-			
 			}
-			
-			System.exit(0);
-			//int colRange[] = getValueField(fieldsDam[9]);
-			//int dataArrecadacaoYear = lin.substring(colRange[0], colRange[1])
-					
-			Calendar dataArrecadacao = Calendar.getInstance();
-			Calendar dataCredito = Calendar.getInstance();	
 
-			//TODO: Fazer com que estas datas recebam os parametros do arquivo XML
-			dataArrecadacao.set(Calendar.YEAR, Integer.parseInt(lin.substring(21, 24)));
-			dataArrecadacao.set(Calendar.MONTH, Integer.parseInt(lin.substring(25, 26)));
-			dataArrecadacao.set(Calendar.DAY_OF_MONTH, Integer.parseInt(lin.substring(27, 28)));
-
-			//TODO: Fazer com que estas datas recebam os parametros do arquivo XML						
-			dataCredito.set(Calendar.YEAR, Integer.parseInt(lin.substring(29, 32)));
-			dataCredito.set(Calendar.MONTH, Integer.parseInt(lin.substring(33, 34)));
-			dataCredito.set(Calendar.DAY_OF_MONTH, Integer.parseInt(lin.substring(35, 36)));
-			/*
-			//TODO: Fazer com que este construtor receba os parametros do arquivo XML
-			Dam dam = new Dam(Integer.parseInt(this.header.substring(73, 78)), 
-					numSeq, 
-					lin.substring(108, 115), 
-					lin.substring(61, 68), 
-					0, 
-					0, 
-					"000", 
-					lin.substring(69, 79), 
-					"", 
-					dataArrecadacao, 
-					dataCredito, 
-					Float.parseFloat(lin.substring(81, 92)), 
-					lin.substring(116, 116), 
-					Float.parseFloat(lin.substring(93, 99)));
-			*/
-			numSeq++;
-			
 			this.dams.add(dam);
+			numSeq++;
 		}
 		
 	}
-	
-	
-
-	
 
 }
