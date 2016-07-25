@@ -1,10 +1,9 @@
 package arquivo;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Path;
 import com.thoughtworks.xstream.XStream;
-import vo.ConfigXml;
 import xml.GeradorXml;
 
 /*
@@ -13,14 +12,14 @@ import xml.GeradorXml;
 
 public class ManipulateXml extends ConciliacaoFiles {
 
-	public ManipulateXml(String fileName) {
+	public ManipulateXml(Path path) {
+		super(path);
 		//Efetua a leitura do arquivo config.xml dentro da pasta do arquivo JAR (executavel deste projeto)
-		super(System.getProperty("user.dir") + File.separator + fileName);
-
+		//Path path = FileSystems.getDefault().getPath(System.getProperty("user.dir") , fileName);
 	}
 
-	public ConfigXml openXml() throws FileNotFoundException {
-		return (ConfigXml) new XStream().fromXML(this.openFileStream());
+	public Object openXml() throws FileNotFoundException {
+		return new XStream().fromXML(this.openFileStream());
 	}
 	
 	public void saveXml(Object o) throws IOException{

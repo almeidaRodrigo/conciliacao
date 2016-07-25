@@ -1,14 +1,15 @@
 package arquivo;
 
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
 import java.util.Calendar;
 
 import erro.ErrorLog;
 
 public class Log extends ConciliacaoFiles {
 
-	public Log(ReaderConfigs readerConfigs) {
-		super(readerConfigs.getConfig("dirLog"));
+	public Log(Path path) {
+		super(path);
 	}
 
 	public void MakeLog(Exception exception) throws FileNotFoundException {
