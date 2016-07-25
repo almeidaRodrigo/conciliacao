@@ -1,6 +1,8 @@
 package vo;
 
 import java.io.File;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -34,19 +36,27 @@ public class ConfigXml {
 	 * @param userNameEmail
 	 * @param subjectEmail
 	 * @param messageEmail
-	 * @param intervaloMinutos
+	 * @param intervaloMilisegundos
 	 */
-	public ConfigXml(String userBd, String passBd, String pathDam15Recebido, String pathDam15Historico,
+	public ConfigXml(String userBd, String passBd, String hostBd, String tipoBanco, int portaBanco, 
+			String nomeServicoBanco, String pathDam15Recebido, String pathDam15Historico,
 			String pathDamDefinitivoRecebido, String pathDamDefinitivoHistorico, String nomeBancoConvenio,
 			ArrayList<String> emailDestinoSuporte, String emailRemetenteSuporte, String hostNameEmail,
 			String passHostEmail, String smtpPort, Boolean ssl, String userNameEmail, String subjectEmail,
-			String messageEmail, int intervaloMinutos) {
+			String messageEmail, Long intervaloMilisegundos, String pathErrorLog) {
+		
+		this.layout = new Layout();
+		
 		this.userBd = userBd;
 		this.passBd = passBd;
-		this.pathDam15Recebido = pathDam15Recebido;
-		this.pathDam15Historico = pathDam15Historico;
-		this.pathDamDefinitivoRecebido = pathDamDefinitivoRecebido;
-		this.pathDamDefinitivoHistorico = pathDamDefinitivoHistorico;
+		this.hostBd = hostBd;
+		this.tipoBanco = tipoBanco;
+		this.portaBanco = portaBanco;
+		this.nomeServicoBanco = nomeServicoBanco;
+		this.setPathDam15Recebido(pathDam15Recebido);
+		this.setPathDam15Historico(pathDam15Historico);
+		this.setPathDamDefinitivoRecebido(pathDamDefinitivoRecebido);
+		this.setPathDamDefinitivoHistorico(pathDamDefinitivoHistorico);
 		this.nomeBancoConvenio = nomeBancoConvenio;
 		this.emailDestinoSuporte = emailDestinoSuporte;
 		this.emailRemetenteSuporte = emailRemetenteSuporte;
@@ -57,9 +67,9 @@ public class ConfigXml {
 		this.userNameEmail = userNameEmail;
 		this.subjectEmail = subjectEmail;
 		this.messageEmail = messageEmail;
-		this.intervaloMinutos = intervaloMinutos;
+		this.intervaloMilisegundos = intervaloMilisegundos;
+		this.setPathErrorLog(pathErrorLog);
 		
-		this.layout = new Layout();
 	}
 	
 	/** The layout Dam. */
@@ -71,15 +81,27 @@ public class ConfigXml {
 	/** The pass bd. */
 	private String passBd;
 	
+	/** The host bd. */
+	private String hostBd;
+	
+	/** The tipo banco. */
+	private String tipoBanco;
+	
+	/** The porta banco. */
+	private int portaBanco;
+	
+	/** The nome servico banco. */
+	private String nomeServicoBanco;
+	
 	/** The path dam recebido. */
-	private String pathDam15Recebido;
+	private Path pathDam15Recebido;
 	
 	/** The path dam historico. */
-	private String pathDam15Historico;
+	private Path pathDam15Historico;
 	
-	private String pathDamDefinitivoRecebido;
+	private Path pathDamDefinitivoRecebido;
 	
-	private String pathDamDefinitivoHistorico;
+	private Path pathDamDefinitivoHistorico;
 	
 	/** The nome banco convenio. */
 	private String nomeBancoConvenio;
@@ -109,8 +131,10 @@ public class ConfigXml {
 	
 	private String messageEmail;
 	
-	private int intervaloMinutos;
+	private Long intervaloMilisegundos;
 	
+	private Path pathErrorLog;
+		
 	/**
 	 * @return the layout
 	 */
@@ -162,12 +186,68 @@ public class ConfigXml {
 	}
 	
 	/**
+	 * @return the hostBd
+	 */
+	public String getHostBd() {
+		return hostBd;
+	}
+
+	/**
+	 * @param hostBd the hostBd to set
+	 */
+	public void setHostBd(String hostBd) {
+		this.hostBd = hostBd;
+	}
+
+	/**
+	 * @return the tipoBanco
+	 */
+	public String getTipoBanco() {
+		return tipoBanco;
+	}
+
+	/**
+	 * @param tipoBanco the tipoBanco to set
+	 */
+	public void setTipoBanco(String tipoBanco) {
+		this.tipoBanco = tipoBanco;
+	}
+
+	/**
+	 * @return the portaBanco
+	 */
+	public int getPortaBanco() {
+		return portaBanco;
+	}
+
+	/**
+	 * @param portaBanco the portaBanco to set
+	 */
+	public void setPortaBanco(int portaBanco) {
+		this.portaBanco = portaBanco;
+	}
+
+	/**
+	 * @return the nomeServicoBanco
+	 */
+	public String getNomeServicoBanco() {
+		return nomeServicoBanco;
+	}
+
+	/**
+	 * @param nomeServicoBanco the nomeServicoBanco to set
+	 */
+	public void setNomeServicoBanco(String nomeServicoBanco) {
+		this.nomeServicoBanco = nomeServicoBanco;
+	}
+
+	/**
 	 * Gets the path dam recebido.
 	 *
 	 * @return the path dam recebido
 	 */
-	public String getPathDam15Recebido() {
-		return pathDam15Recebido;
+	public Path getPathDam15Recebido() {
+		return this.pathDam15Recebido;
 	}
 	
 	/**
@@ -176,7 +256,7 @@ public class ConfigXml {
 	 * @param pathDamRecebido the new path dam recebido
 	 */
 	public void setPathDam15Recebido(String pathDamRecebido) {
-		this.pathDam15Recebido = pathDamRecebido;
+		this.pathDam15Recebido = FileSystems.getDefault().getPath(pathDamRecebido);
 	}
 	
 	/**
@@ -184,8 +264,8 @@ public class ConfigXml {
 	 *
 	 * @return the path dam historico
 	 */
-	public String getPathDam15Historico() {
-		return pathDam15Historico;
+	public Path getPathDam15Historico() {
+		return this.getPathDam15Historico();
 	}
 	
 	/**
@@ -195,35 +275,35 @@ public class ConfigXml {
 	 * @param pathDam15Historico the new path dam historico
 	 */
 	public void setPathDam15Historico(String pathDam15Historico) {
-		this.pathDam15Historico = pathDam15Historico + File.separator + Calendar.getInstance().get(Calendar.YEAR)+ File.separator;
+		this.pathDam15Historico =  FileSystems.getDefault().getPath(pathDam15Historico + File.separator + Calendar.getInstance().get(Calendar.YEAR)); 
 	}
 	
 	/**
 	 * @return the pathDamDefinitivoRecebido
 	 */
-	public String getPathDamDefinitivoRecebido() {
-		return pathDamDefinitivoRecebido;
+	public Path getPathDamDefinitivoRecebido() {
+		return this.pathDamDefinitivoRecebido;
 	}
 
 	/**
 	 * @param pathDamDefinitivoRecebido the pathDamDefinitivoRecebido to set
 	 */
 	public void setPathDamDefinitivoRecebido(String pathDamDefinitivoRecebido) {
-		this.pathDamDefinitivoRecebido = pathDamDefinitivoRecebido + File.separator + Calendar.getInstance().get(Calendar.YEAR)+ File.separator;
+		this.pathDamDefinitivoRecebido =  FileSystems.getDefault().getPath(pathDamDefinitivoRecebido + File.separator + Calendar.getInstance().get(Calendar.YEAR));
 	}
 
 	/**
 	 * @return the pathDamDefinitivoHistorico
 	 */
-	public String getPathDamDefinitivoHistorico() {
-		return pathDamDefinitivoHistorico;
+	public Path getPathDamDefinitivoHistorico() {
+		return this.pathDamDefinitivoHistorico;
 	}
 
 	/**
 	 * @param pathDamDefinitivoHistorico the pathDamDefinitivoHistorico to set
 	 */
 	public void setPathDamDefinitivoHistorico(String pathDamDefinitivoHistorico) {
-		this.pathDamDefinitivoHistorico = pathDamDefinitivoHistorico;
+		this.pathDamDefinitivoHistorico =  FileSystems.getDefault().getPath(pathDamDefinitivoHistorico + File.separator + Calendar.getInstance().get(Calendar.YEAR));
 	}
 
 	/**
@@ -401,15 +481,29 @@ public class ConfigXml {
 	/**
 	 * @return the intervaloMinutos
 	 */
-	public int getIntervaloMinutos() {
-		return intervaloMinutos;
+	public Long getIntervaloMilisegundos() {
+		return intervaloMilisegundos;
 	}
 
 	/**
-	 * @param intervaloMinutos the intervaloMinutos to set
+	 * @param intervaloMilisegundos the intervaloMinutos to set
 	 */
-	public void setIntervaloMinutos(int intervaloMinutos) {
-		this.intervaloMinutos = intervaloMinutos;
+	public void setIntervaloMilisegundos(Long intervaloMilisegundos) {
+		this.intervaloMilisegundos = intervaloMilisegundos;
+	}
+
+	/**
+	 * @return the errorLogPath
+	 */
+	public Path getPathErrorLog() {
+		return pathErrorLog;
+	}
+
+	/**
+	 * @param pathErrorLog the errorLogPath to set
+	 */
+	public void setPathErrorLog(String pathErrorLog) {
+		this.pathErrorLog = FileSystems.getDefault().getPath(pathErrorLog);
 	}
 	
 	

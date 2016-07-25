@@ -3,8 +3,8 @@
     <layoutDams>
       <vo.LayoutDam>
         <attributeName>CodigoLote</attributeName>
-        <colNumberStart>0</colNumberStart>
-        <colNumberEnd>0</colNumberEnd>
+        <colNumberStart>73</colNumberStart>
+        <colNumberEnd>79</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>NumSeq</attributeName>
@@ -12,19 +12,19 @@
         <colNumberEnd>0</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
-        <attributeName>CodigoAgencia</attributeName>
-        <colNumberStart>0</colNumberStart>
-        <colNumberEnd>0</colNumberEnd>
-      </vo.LayoutDam>
-      <vo.LayoutDam>
-        <attributeName>NumDam</attributeName>
-        <colNumberStart>0</colNumberStart>
-        <colNumberEnd>0</colNumberEnd>
-      </vo.LayoutDam>
-      <vo.LayoutDam>
         <attributeName>SeqDuplicacao</attributeName>
         <colNumberStart>0</colNumberStart>
         <colNumberEnd>0</colNumberEnd>
+      </vo.LayoutDam>
+      <vo.LayoutDam>
+        <attributeName>CodigoAgencia</attributeName>
+        <colNumberStart>107</colNumberStart>
+        <colNumberEnd>115</colNumberEnd>
+      </vo.LayoutDam>
+      <vo.LayoutDam>
+        <attributeName>NumDam</attributeName>
+        <colNumberStart>60</colNumberStart>
+        <colNumberEnd>67</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>NumReq</attributeName>
@@ -38,8 +38,8 @@
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>CodigoUsuario</attributeName>
-        <colNumberStart>0</colNumberStart>
-        <colNumberEnd>0</colNumberEnd>
+        <colNumberStart>67</colNumberStart>
+        <colNumberEnd>79</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>CpfCnpj</attributeName>
@@ -48,8 +48,8 @@
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>DataArrecadacao</attributeName>
-        <colNumberStart>0</colNumberStart>
-        <colNumberEnd>0</colNumberEnd>
+        <colNumberStart>21</colNumberStart>
+        <colNumberEnd>29</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>DataCredito</attributeName>
@@ -58,38 +58,81 @@
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>ValorPago</attributeName>
-        <colNumberStart>0</colNumberStart>
-        <colNumberEnd>0</colNumberEnd>
+        <colNumberStart>81</colNumberStart>
+        <colNumberEnd>93</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>FormaPagamento</attributeName>
-        <colNumberStart>0</colNumberStart>
-        <colNumberEnd>0</colNumberEnd>
+        <colNumberStart>116</colNumberStart>
+        <colNumberEnd>117</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
         <attributeName>ValorTarifa</attributeName>
-        <colNumberStart>0</colNumberStart>
-        <colNumberEnd>0</colNumberEnd>
+        <colNumberStart>93</colNumberStart>
+        <colNumberEnd>100</colNumberEnd>
       </vo.LayoutDam>
     </layoutDams>
   </layout>
   <userBd>rodrigo</userBd>
-  <passBd>senhaTeste</passBd>
-  <pathDam15Recebido>c:\dam15Recebido</pathDam15Recebido>
-  <pathDam15Historico>c:\dam15Historico</pathDam15Historico>
-  <pathDamDefinitivoRecebido>c:\damDefinitivoRecebido</pathDamDefinitivoRecebido>
-  <pathDamDefinitivoHistorico>c:\damDefinitivoHistorico</pathDamDefinitivoHistorico>
+  <passBd>---</passBd>
+  <hostBd>---</hostBd>
+  <tipoBanco>oracle</tipoBanco>
+  <portaBanco>1521</portaBanco>
+  <nomeServicoBanco>prod</nomeServicoBanco>
+  <pathDam15Recebido class="sun.nio.fs.WindowsPath">
+    <fs>
+      <provider>
+        <theFileSystem reference="../.."/>
+      </provider>
+      <defaultDirectory>A:\workspace\conciliacao</defaultDirectory>
+      <defaultRoot>A:\</defaultRoot>
+      <supportsLinks>true</supportsLinks>
+      <supportsStreamEnumeration>true</supportsStreamEnumeration>
+    </fs>
+    <type>ABSOLUTE</type>
+    <root>c:\</root>
+    <path>c:\dam15Recebido</path>
+    <hash>0</hash>
+  </pathDam15Recebido>
+  <pathDam15Historico class="sun.nio.fs.WindowsPath">
+    <fs reference="../../pathDam15Recebido/fs"/>
+    <type>ABSOLUTE</type>
+    <root>c:\</root>
+    <path>c:\dam15Historico\2016</path>
+    <hash>0</hash>
+  </pathDam15Historico>
+  <pathDamDefinitivoRecebido class="sun.nio.fs.WindowsPath">
+    <fs reference="../../pathDam15Recebido/fs"/>
+    <type>ABSOLUTE</type>
+    <root>c:\</root>
+    <path>c:\damDefinitivoRecebido\2016</path>
+    <hash>0</hash>
+  </pathDamDefinitivoRecebido>
+  <pathDamDefinitivoHistorico class="sun.nio.fs.WindowsPath">
+    <fs reference="../../pathDam15Recebido/fs"/>
+    <type>ABSOLUTE</type>
+    <root>c:\</root>
+    <path>c:\damDefinitivoHistorico\2016</path>
+    <hash>0</hash>
+  </pathDamDefinitivoHistorico>
   <nomeBancoConvenio>BB</nomeBancoConvenio>
   <emailDestinoSuporte>
     <string>suporte@juceb.ba.gov.br</string>
   </emailDestinoSuporte>
   <emailRemetenteSuporte>rodrigo@juceb.ba.gov.br</emailRemetenteSuporte>
-  <hostNameEmail>envio.ba.gov.br</hostNameEmail>
+  <hostNameEmail>*****</hostNameEmail>
   <passHostEmail></passHostEmail>
   <smtpPort>25</smtpPort>
   <ssl>false</ssl>
   <userNameEmail></userNameEmail>
   <subjectEmail>Assunto do Email</subjectEmail>
   <messageEmail>Mensagem inicial do email</messageEmail>
-  <intervaloMinutos>15</intervaloMinutos>
+  <intervaloMilisegundos>6000</intervaloMilisegundos>
+  <pathErrorLog class="sun.nio.fs.WindowsPath">
+    <fs reference="../../pathDam15Recebido/fs"/>
+    <type>ABSOLUTE</type>
+    <root>c:\</root>
+    <path>c:\erroConciliacao.txt</path>
+    <hash>0</hash>
+  </pathErrorLog>
 </vo.ConfigXml>

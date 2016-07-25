@@ -1,41 +1,40 @@
 package vo;
 
 import java.util.Calendar;
-import arquivo.RegressReaderFile;
 
 public class Dam {
 
-	private int CodigoLote;
+	public int CodigoLote;
 
-	private int NumSeq;
+	public int NumSeq;
+	
+	public int SeqDuplicacao;
 
-	private String CodigoAgencia;
+	public String CodigoAgencia;
 
-	private String NumDam;
+	public String NumDam;
 
-	private int SeqDuplicacao;
+	public int NumReq;
 
-	private int NumReq;
+	public String TipoDocumento;
 
-	private String TipoDocumento;
+	public String CodigoUsuario;
 
-	private String CodigoUsuario;
-
-	private String CpfCnpj;
+	public String CpfCnpj;
 
 	//private Calendar DataEmissao;
 
-	private Calendar DataArrecadacao;
+	public Calendar DataArrecadacao;
 
-	private Calendar DataCredito;
+	public Calendar DataCredito;
 
 	//private float ValorDocumento;
 
-	private float ValorPago;
+	public float ValorPago;
 
-	private String FormaPagamento;
+	public int FormaPagamento;
 
-	private float ValorTarifa;
+	public float ValorTarifa;
 	
 	public Dam(){
 		
@@ -60,7 +59,7 @@ public class Dam {
 	 */
 	public Dam(int codigoLote, int numSeq, String codigoAgencia, String numDam, int seqDuplicacao, int numReq,
 			String tipoDocumento, String codigoUsuario, String cpfCnpj, Calendar dataArrecadacao,
-			Calendar dataCredito, float valorPago, String formaPagamento, float valorTarifa) {
+			Calendar dataCredito, float valorPago, int formaPagamento, float valorTarifa) {
 		CodigoLote = codigoLote;
 		NumSeq = numSeq;
 		CodigoAgencia = codigoAgencia;
@@ -80,16 +79,16 @@ public class Dam {
 		
 	}
 
-	public float getCodigoLote() {
-		return 0;
+	public int getCodigoLote() {
+		return this.CodigoLote;
 	}
 
 	public void setCodigoLote(int codigoLote) {
 
 	}
 
-	public void getNumSeq() {
-
+	public int getNumSeq() {
+		return this.NumSeq;
 	}
 
 	public void setNumSeq(float numSeq) {
@@ -97,7 +96,7 @@ public class Dam {
 	}
 
 	public String getCodigoAgencia() {
-		return null;
+		return this.CodigoAgencia;
 	}
 
 	public void setCodigoAgencia(String codigoAgencia) {
@@ -105,7 +104,7 @@ public class Dam {
 	}
 
 	public String getNumDam() {
-		return null;
+		return this.NumDam;
 	}
 
 	public void setNumDam(String numDam) {
@@ -113,7 +112,7 @@ public class Dam {
 	}
 
 	public int getSeqDuplicacao() {
-		return 0;
+		return this.SeqDuplicacao;
 	}
 
 	public void setSeqDuplicacao(int seqDuplicacao) {
@@ -137,7 +136,7 @@ public class Dam {
 	}
 
 	public String getCodigoUsuario() {
-		return null;
+		return this.CodigoUsuario;
 	}
 
 	public void setCodigoUsuario(String codigoUsuario) {
@@ -161,7 +160,7 @@ public class Dam {
 	}
 
 	public Calendar getDataArrecadacao() {
-		return null;
+		return this.DataArrecadacao;
 	}
 
 	public void setDataArrecadacao(Calendar dataArrecadacao) {
@@ -169,11 +168,11 @@ public class Dam {
 	}
 
 	public Calendar getDataCredito() {
-		return null;
+		return this.DataCredito;
 	}
 
 	public void setDataCredito(Calendar dataCredito) {
-
+		this.DataCredito = dataCredito;
 	}
 /*
 	public float getValorDocumento() {
@@ -185,27 +184,27 @@ public class Dam {
 	}
 */
 	public float getValorPago() {
-		return 0;
+		return this.ValorPago;
 	}
 
 	public void setValorPago(float valorPago) {
 
 	}
 
-	public String getFormaPagamento() {
-		return null;
+	public int getFormaPagamento() {
+		return this.FormaPagamento;
 	}
 
-	public void setFormaPagamento(String formaPagamento) {
-
+	public void setFormaPagamento(int formaPagamento) {
+		this.FormaPagamento = formaPagamento;
 	}
 
 	public float getValorTarifa() {
-		return 0;
+		return this.ValorTarifa;
 	}
 
 	public void setValorTarifa(float valorTarifa) {
-
+		this.ValorTarifa = valorTarifa;
 	}
 
 }

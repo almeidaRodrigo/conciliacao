@@ -6,9 +6,10 @@ import arquivo.ManipulateXml;
 import vo.Layout;
 
 
-public class testLayoutDam {
-
+public class TestLayoutDam {
+	/*
 	public static void main(String[] args) {
+		
 		Layout layout = new Layout();
 		try {
 			new ManipulateXml("layout.xml").saveXml(layout);
@@ -18,5 +19,6 @@ public class testLayoutDam {
 		}
 
 	}
+	*/
 
 }
