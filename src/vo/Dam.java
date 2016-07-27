@@ -2,39 +2,43 @@ package vo;
 
 import java.util.Calendar;
 
+import utilitario.DigitoVerificador;
+
 public class Dam {
 
-	public int CodigoLote;
+	public int codigoLote;
 
-	public int NumSeq;
+	public int numSeq;
 	
-	public int SeqDuplicacao;
+	public int seqDuplicacao;
 
-	public String CodigoAgencia;
+	public String codigoAgencia;
 
-	public String NumDam;
+	public String numDam;
 
-	public int NumReq;
+	public int numReq;
 
-	public String TipoDocumento;
+	public String tipoDocumento;
 
-	public String CodigoUsuario;
+	public String codigoUsuario;
 
-	public String CpfCnpj;
+	public String cpfCnpj;
 
-	//private Calendar DataEmissao;
+	//private Calendar dataEmissao;
 
-	public Calendar DataArrecadacao;
+	public Calendar dataArrecadacao;
 
-	public Calendar DataCredito;
+	public Calendar dataCredito;
 
-	//private float ValorDocumento;
+	//private float valorDocumento;
 
-	public float ValorPago;
+	public float valorPago;
 
-	public int FormaPagamento;
+	public int formaPagamento;
 
-	public float ValorTarifa;
+	public float valorTarifa;
+	
+	public String codigoRegistro;
 	
 	public Dam(){
 		
@@ -60,151 +64,257 @@ public class Dam {
 	public Dam(int codigoLote, int numSeq, String codigoAgencia, String numDam, int seqDuplicacao, int numReq,
 			String tipoDocumento, String codigoUsuario, String cpfCnpj, Calendar dataArrecadacao,
 			Calendar dataCredito, float valorPago, int formaPagamento, float valorTarifa) {
-		CodigoLote = codigoLote;
-		NumSeq = numSeq;
-		CodigoAgencia = codigoAgencia;
-		NumDam = numDam;
-		SeqDuplicacao = seqDuplicacao;
-		NumReq = numReq;
-		TipoDocumento = tipoDocumento;
-		CodigoUsuario = codigoUsuario;
-		CpfCnpj = cpfCnpj;
-		//DataEmissao = dataEmissao;
-		DataArrecadacao = dataArrecadacao;
-		DataCredito = dataCredito;
-		//ValorDocumento = valorDocumento;
-		ValorPago = valorPago;
-		FormaPagamento = formaPagamento;
-		ValorTarifa = valorTarifa;
+		this.codigoLote = codigoLote;
+		this.numSeq = numSeq;
+		this.codigoAgencia = codigoAgencia;
+		this.numDam = numDam;
+		this.seqDuplicacao = seqDuplicacao;
+		this.numReq = numReq;
+		this.tipoDocumento = tipoDocumento;
+		this.codigoUsuario = codigoUsuario;
+		this.cpfCnpj = cpfCnpj;
+		//this.dataEmissao = dataEmissao;
+		this.dataArrecadacao = dataArrecadacao;
+		this.dataCredito = dataCredito;
+		//this.valorDocumento = valorDocumento;
+		this.valorPago = valorPago;
+		this.formaPagamento = formaPagamento;
+		this.valorTarifa = valorTarifa;
 		
 	}
 
+	/**
+	 * @return the codigoLote
+	 */
 	public int getCodigoLote() {
-		return this.CodigoLote;
+		return codigoLote;
 	}
 
+	/**
+	 * @param codigoLote the codigoLote to set
+	 */
 	public void setCodigoLote(int codigoLote) {
-
+		this.codigoLote = codigoLote;
 	}
 
+	/**
+	 * @return the numSeq
+	 */
 	public int getNumSeq() {
-		return this.NumSeq;
+		return numSeq;
 	}
 
-	public void setNumSeq(float numSeq) {
-
+	/**
+	 * @param numSeq the numSeq to set
+	 */
+	public void setNumSeq(int numSeq) {
+		this.numSeq = numSeq;
 	}
 
-	public String getCodigoAgencia() {
-		return this.CodigoAgencia;
-	}
-
-	public void setCodigoAgencia(String codigoAgencia) {
-
-	}
-
-	public String getNumDam() {
-		return this.NumDam;
-	}
-
-	public void setNumDam(String numDam) {
-
-	}
-
+	/**
+	 * @return the seqDuplicacao
+	 */
 	public int getSeqDuplicacao() {
-		return this.SeqDuplicacao;
+		return seqDuplicacao;
 	}
 
+	/**
+	 * @param seqDuplicacao the seqDuplicacao to set
+	 */
 	public void setSeqDuplicacao(int seqDuplicacao) {
-
+		this.seqDuplicacao = seqDuplicacao;
 	}
 
+	/**
+	 * @return the codigoAgencia
+	 */
+	public String getCodigoAgencia() {
+		return codigoAgencia;
+	}
+
+	/**
+	 * @param codigoAgencia the codigoAgencia to set
+	 */
+	public void setCodigoAgencia(String codigoAgencia) {
+		this.codigoAgencia = codigoAgencia;
+	}
+
+	/**
+	 * @return the numDam
+	 */
+	public String getNumDam() {
+		return numDam;
+	}
+	
+	/**
+	 * @return the numDam + DV mod11
+	 */
+	public String getDigitoVerificador() {
+		return DigitoVerificador.mod11(Integer.parseInt(numDam));
+	}
+	
+	/**
+	 * @return the "3" + numDam + DV mod11
+	 */
+	public String getNumDamNewFull() {
+		return "3" + this.getNumDam() + this.getDigitoVerificador();
+	}
+	
+	/**
+	 * @return the "0" + numDam + DV mod11
+	 */
+	public String getNumDamOldFull() {
+		return "0" + this.getNumDam() + this.getDigitoVerificador();
+	}
+
+	/**
+	 * @param numDam the numDam to set
+	 */
+	public void setNumDam(String numDam) {
+		this.numDam = numDam;
+	}
+
+	/**
+	 * @return the numReq
+	 */
 	public int getNumReq() {
-		return 0;
+		return numReq;
 	}
 
+	/**
+	 * @param numReq the numReq to set
+	 */
 	public void setNumReq(int numReq) {
-
+		this.numReq = numReq;
 	}
 
+	/**
+	 * @return the tipoDocumento
+	 */
 	public String getTipoDocumento() {
-		return null;
+		return tipoDocumento;
 	}
 
+	/**
+	 * @param tipoDocumento the tipoDocumento to set
+	 */
 	public void setTipoDocumento(String tipoDocumento) {
-
+		this.tipoDocumento = tipoDocumento;
 	}
 
+	/**
+	 * @return the codigoUsuario
+	 */
 	public String getCodigoUsuario() {
-		return this.CodigoUsuario;
+		return codigoUsuario;
 	}
 
+	/**
+	 * @param codigoUsuario the codigoUsuario to set
+	 */
 	public void setCodigoUsuario(String codigoUsuario) {
-
+		this.codigoUsuario = codigoUsuario;
 	}
 
+	/**
+	 * @return the cpfCnpj
+	 */
 	public String getCpfCnpj() {
-		return null;
+		return cpfCnpj;
 	}
 
+	/**
+	 * @param cpfCnpj the cpfCnpj to set
+	 */
 	public void setCpfCnpj(String cpfCnpj) {
-
+		this.cpfCnpj = cpfCnpj;
 	}
 
-	public Calendar getDataEmissao() {
-		return null;
-	}
-
-	public void setDataEmissao(Calendar dataEmissao) {
-
-	}
-
+	/**
+	 * @return the dataArrecadacao
+	 */
 	public Calendar getDataArrecadacao() {
-		return this.DataArrecadacao;
+		return dataArrecadacao;
 	}
 
+	/**
+	 * @param dataArrecadacao the dataArrecadacao to set
+	 */
 	public void setDataArrecadacao(Calendar dataArrecadacao) {
-
+		this.dataArrecadacao = dataArrecadacao;
 	}
 
+	/**
+	 * @return the dataCredito
+	 */
 	public Calendar getDataCredito() {
-		return this.DataCredito;
+		return dataCredito;
 	}
 
+	/**
+	 * @param dataCredito the dataCredito to set
+	 */
 	public void setDataCredito(Calendar dataCredito) {
-		this.DataCredito = dataCredito;
-	}
-/*
-	public float getValorDocumento() {
-		return 0;
+		this.dataCredito = dataCredito;
 	}
 
-	public void setValorDocumento(float valorDocumento) {
-
-	}
-*/
+	/**
+	 * @return the valorPago
+	 */
 	public float getValorPago() {
-		return this.ValorPago;
+		return valorPago;
 	}
 
+	/**
+	 * @param valorPago the valorPago to set
+	 */
 	public void setValorPago(float valorPago) {
-
+		this.valorPago = valorPago;
 	}
 
+	/**
+	 * @return the formaPagamento
+	 */
 	public int getFormaPagamento() {
-		return this.FormaPagamento;
+		return formaPagamento;
 	}
 
+	/**
+	 * @param formaPagamento the formaPagamento to set
+	 */
 	public void setFormaPagamento(int formaPagamento) {
-		this.FormaPagamento = formaPagamento;
+		this.formaPagamento = formaPagamento;
 	}
 
+	/**
+	 * @return the valorTarifa
+	 */
 	public float getValorTarifa() {
-		return this.ValorTarifa;
+		return valorTarifa;
 	}
 
+	/**
+	 * @param valorTarifa the valorTarifa to set
+	 */
 	public void setValorTarifa(float valorTarifa) {
-		this.ValorTarifa = valorTarifa;
+		this.valorTarifa = valorTarifa;
 	}
+
+	/**
+	 * @return the codigoRegistro
+	 */
+	public String getCodigoRegistro() {
+		return codigoRegistro;
+	}
+
+	/**
+	 * @param codigoRegistro the codigoRegistro to set
+	 */
+	public void setCodigoRegistro(String codigoRegistro) {
+		this.codigoRegistro = codigoRegistro;
+	}
+
+	
+	
 
 }
