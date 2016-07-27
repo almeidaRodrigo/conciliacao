@@ -42,7 +42,7 @@ public class Controller {
 		while(true){
 			System.out.println("Inciciando aguarde...");
 			Thread.sleep(this.configXml.getIntervaloMilisegundos());
-			System.out.println("...finalizado!");
+			System.out.println("...'aguarde' finalizado!");
 			this.run();
 		}
 	}

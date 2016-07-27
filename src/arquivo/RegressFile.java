@@ -6,17 +6,18 @@ import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import com.thoughtworks.xstream.converters.reflection.FieldDictionary;
-
 import conexao.OracleConnection;
 import dao.DamDao;
+import utilitario.RegressTreatment;
 import vo.ConfigXml;
 import vo.Dam;
-import vo.Layout;
-import vo.LayoutDam;
 
 public class RegressFile extends ConciliacaoFiles {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private String header;
 
@@ -158,7 +159,7 @@ public class RegressFile extends ConciliacaoFiles {
 			//-Fim numSeq
 
 			//Efetua a captura do SeqDuplicacao EXCLUSIVAMENTE via consulta a tabela do dam.
-			colRange = this.configXml.getLayout().getColStartEndByAttribute("NumDam");
+			colRange = this.configXml.getLayout().getColStartEndByAttribute("numDam");
 			seqDuplicacao = new DamDao(OracleConnection.connect(this.configXml)).countDam15(lin.substring(colRange[0], colRange[1]));
 			dam.getClass().getField(fieldsDam[2].getName()).set(dam, seqDuplicacao);
 			//-Fim SeqDuplicacao
@@ -167,7 +168,7 @@ public class RegressFile extends ConciliacaoFiles {
 				colRange = this.configXml.getLayout().getColStartEndByAttribute(fieldsDam[index].getName());
 				String dadoCampo = lin.substring(colRange[0], colRange[1]).trim();
 				
-				if(colRange[0] != 0 && colRange[1] != 0 && !dadoCampo.isEmpty()){
+				if(colRange[1] != 0 && colRange[0] <= colRange[1] && !dadoCampo.isEmpty()){
 					switch (fieldsDam[index].getType().getName().trim()) {
 						case "int":
 							dam.getClass().getField(fieldsDam[index].getName()).set(dam, Integer.parseInt(dadoCampo));
@@ -198,6 +199,12 @@ public class RegressFile extends ConciliacaoFiles {
 			numSeq++;
 		}
 		
+		this.validate();
+		
+	}
+	
+	private void validate() throws Exception{
+		RegressTreatment.isValidRegressFile(this);
 	}
 
 }
