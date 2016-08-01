@@ -3,7 +3,7 @@ package conexao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class ConexaoFactory {
+final class ConexaoFactory {
 
 	private static StringBuilder urlBuilder = new StringBuilder();
 	private static String driver;
@@ -14,6 +14,10 @@ public class ConexaoFactory {
 	private static String serviceName;
 	private static Connection con = null;
 	private static String url;
+	
+	private ConexaoFactory(){
+		//Evitar instancia de classe, pois, esta classe somente tem metodos static.
+	}
 
 	public static Connection connect(String driver, String user, String pass, String host, int port,
 			String serviceName) throws Exception {

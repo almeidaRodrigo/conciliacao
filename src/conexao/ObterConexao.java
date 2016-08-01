@@ -11,8 +11,11 @@ import vo.ConfigXml;
  * @author rodrigo
  *
  */
-public abstract class OracleConnection {
-		
+public final class ObterConexao {
+	private ObterConexao(){
+		//Evitar instancia de classe, pois, esta classe somente tem metodos static.
+	}
+	
 	/**
 	 * @param configXml
 	 * @throws Exception 
@@ -26,5 +29,4 @@ public abstract class OracleConnection {
 				configXml.getPortaBanco(), 
 				configXml.getNomeServicoBanco());
 	}
-
 }
