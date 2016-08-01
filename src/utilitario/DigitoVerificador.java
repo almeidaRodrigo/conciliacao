@@ -10,7 +10,7 @@ package utilitario;
 public final class DigitoVerificador {
 	
 	private DigitoVerificador(){
-		
+		//Evitar instancia de classe, pois, esta classe somente tem metodos static.
 	}
 	
 	public static String mod11(int value){

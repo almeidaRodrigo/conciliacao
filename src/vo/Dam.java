@@ -1,12 +1,11 @@
 package vo;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 
 import utilitario.DigitoVerificador;
 
 public class Dam {
-
-	public int codigoLote;
 
 	public int numSeq;
 	
@@ -32,11 +31,11 @@ public class Dam {
 
 	//private float valorDocumento;
 
-	public float valorPago;
+	public BigDecimal valorPago;
 
 	public int formaPagamento;
 
-	public float valorTarifa;
+	public BigDecimal valorTarifa;
 	
 	public String codigoRegistro;
 	
@@ -45,7 +44,6 @@ public class Dam {
 	}
 
 	/**
-	 * @param codigoLote
 	 * @param numSeq
 	 * @param codigoAgencia
 	 * @param numDam
@@ -61,10 +59,10 @@ public class Dam {
 	 * @param valorTarifa
 	 * 
 	 */
-	public Dam(int codigoLote, int numSeq, String codigoAgencia, String numDam, int seqDuplicacao, int numReq,
+	public Dam(int numSeq, String codigoAgencia, String numDam, int seqDuplicacao, int numReq,
 			String tipoDocumento, String codigoUsuario, String cpfCnpj, Calendar dataArrecadacao,
-			Calendar dataCredito, float valorPago, int formaPagamento, float valorTarifa) {
-		this.codigoLote = codigoLote;
+			Calendar dataCredito, BigDecimal valorPago, int formaPagamento, BigDecimal valorTarifa) {
+
 		this.numSeq = numSeq;
 		this.codigoAgencia = codigoAgencia;
 		this.numDam = numDam;
@@ -81,20 +79,6 @@ public class Dam {
 		this.formaPagamento = formaPagamento;
 		this.valorTarifa = valorTarifa;
 		
-	}
-
-	/**
-	 * @return the codigoLote
-	 */
-	public int getCodigoLote() {
-		return codigoLote;
-	}
-
-	/**
-	 * @param codigoLote the codigoLote to set
-	 */
-	public void setCodigoLote(int codigoLote) {
-		this.codigoLote = codigoLote;
 	}
 
 	/**
@@ -153,20 +137,6 @@ public class Dam {
 		return DigitoVerificador.mod11(Integer.parseInt(numDam));
 	}
 	
-	/**
-	 * @return the "3" + numDam + DV mod11
-	 */
-	public String getNumDamNewFull() {
-		return "3" + this.getNumDam() + this.getDigitoVerificador();
-	}
-	
-	/**
-	 * @return the "0" + numDam + DV mod11
-	 */
-	public String getNumDamOldFull() {
-		return "0" + this.getNumDam() + this.getDigitoVerificador();
-	}
-
 	/**
 	 * @param numDam the numDam to set
 	 */
@@ -261,14 +231,14 @@ public class Dam {
 	/**
 	 * @return the valorPago
 	 */
-	public float getValorPago() {
+	public BigDecimal getValorPago() {
 		return valorPago;
 	}
 
 	/**
 	 * @param valorPago the valorPago to set
 	 */
-	public void setValorPago(float valorPago) {
+	public void setValorPago(BigDecimal valorPago) {
 		this.valorPago = valorPago;
 	}
 
@@ -289,14 +259,14 @@ public class Dam {
 	/**
 	 * @return the valorTarifa
 	 */
-	public float getValorTarifa() {
+	public BigDecimal getValorTarifa() {
 		return valorTarifa;
 	}
 
 	/**
 	 * @param valorTarifa the valorTarifa to set
 	 */
-	public void setValorTarifa(float valorTarifa) {
+	public void setValorTarifa(BigDecimal valorTarifa) {
 		this.valorTarifa = valorTarifa;
 	}
 
@@ -313,8 +283,5 @@ public class Dam {
 	public void setCodigoRegistro(String codigoRegistro) {
 		this.codigoRegistro = codigoRegistro;
 	}
-
-	
-	
 
 }

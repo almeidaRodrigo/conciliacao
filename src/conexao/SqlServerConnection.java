@@ -9,7 +9,11 @@ import java.sql.Connection;
  * @author rodrigo
  *
  */
-public abstract class SqlServerConnection {
+public final class SqlServerConnection {
+	private SqlServerConnection(){
+		//Evitar instancia de classe, pois, esta classe somente tem metodos static.
+	}
+	
 	/**
 	 * @param configXml
 	 * @throws Exception 
