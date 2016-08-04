@@ -13,16 +13,15 @@ public final class DigitoVerificador {
 		//Evitar instancia de classe, pois, esta classe somente tem metodos static.
 	}
 	
-	public static String obterDigito(int value){
+	public static String obterDigito(String value){
 		int sum = 0;
 		int resto = 0;
 
 		//String sValue = "3" + String.valueOf(value); //O DAM deve iniciar com '3' + 7 numeros e passar a ser incrementado a partir dai.
-		String sValue = String.valueOf(value);
 		String digito = "";
 		
-		for(int i = 0; i < sValue.length(); i++){
-			digito = sValue.substring(i, i+1);
+		for(int i = 0; i < value.length(); i++){
+			digito = value.substring(i, i+1);
 			sum = sum + ( (i+1) * Integer.parseInt(digito));
 		}
 		
