@@ -17,7 +17,8 @@ public final class DigitoVerificador {
 		int sum = 0;
 		int resto = 0;
 
-		String sValue = "3" + String.valueOf(value);
+		//String sValue = "3" + String.valueOf(value); //O DAM deve iniciar com '3' + 7 numeros e passar a ser incrementado a partir dai.
+		String sValue = String.valueOf(value);
 		String digito = "";
 		
 		for(int i = 0; i < sValue.length(); i++){

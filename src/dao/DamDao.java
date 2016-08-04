@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import arquivo.RegressFile;
+import utilitario.DigitoVerificador;
 
 public class DamDao {
 
@@ -68,10 +69,18 @@ public class DamDao {
 		stmt = conn.prepareStatement(sql);
 
 		for (Dam dam : lDams) {
+			int lengthDam = dam.getNumDam().length();
+			
 			stmt.setInt(1, regressFile.getLote().getCodigoLote());
 			stmt.setInt(2, dam.getNumSeq());
 			stmt.setString(3, dam.getCodigoAgencia());
-			stmt.setString(4, dam.getNumDam());
+			//-- Condicional para calculo de digito verificador do DAM assumindo o tamanho de 7 como legado (por isso a adição do pre fixo zero
+			if(lengthDam == 7){
+				stmt.setString(4, "0"+ DigitoVerificador.mod11(Integer.parseInt(dam.getNumDam())));
+			}else if(lengthDam > 7){
+				stmt.setString(4, DigitoVerificador.mod11(Integer.parseInt(dam.getNumDam())));
+			}
+			//--
 			stmt.setInt(5, dam.getSeqDuplicacao());
 			stmt.setInt(6, dam.getNumReq());
 			stmt.setString(7, dam.getTipoDocumento());
