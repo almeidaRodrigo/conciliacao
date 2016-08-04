@@ -13,7 +13,7 @@ public final class DigitoVerificador {
 		//Evitar instancia de classe, pois, esta classe somente tem metodos static.
 	}
 	
-	public static String mod11(int value){
+	public static String obterDigito(int value){
 		int sum = 0;
 		int resto = 0;
 
