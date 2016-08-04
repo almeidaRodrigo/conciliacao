@@ -76,9 +76,9 @@ public class DamDao {
 			stmt.setString(3, dam.getCodigoAgencia());
 			//-- Condicional para calculo de digito verificador do DAM assumindo o tamanho de 7 como legado (por isso a adição do pre fixo zero
 			if(lengthDam == 7){
-				stmt.setString(4, "0"+ DigitoVerificador.mod11(Integer.parseInt(dam.getNumDam())));
+				stmt.setString(4, "0"+dam.getNumDam()+DigitoVerificador.obterDigito(Integer.parseInt(dam.getNumDam())));
 			}else if(lengthDam > 7){
-				stmt.setString(4, DigitoVerificador.mod11(Integer.parseInt(dam.getNumDam())));
+				stmt.setString(4, dam.getNumDam()+DigitoVerificador.obterDigito(Integer.parseInt(dam.getNumDam())));
 			}
 			//--
 			stmt.setInt(5, dam.getSeqDuplicacao());
