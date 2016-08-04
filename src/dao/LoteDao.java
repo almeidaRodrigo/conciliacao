@@ -7,9 +7,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import arquivo.RegressFile;
-import vo.Lote;
 import vo.TipoDamEnum;
 
 
@@ -81,7 +79,9 @@ public class LoteDao {
 		PreparedStatement stmt;
 		ResultSet rs;
 		
+		sql.delete(0, sql.length());
 		sql.append("select numerolote from "+ tipoLote.getSchemaLote() +" where numerolote = ?");
+		
 		stmt = connection.prepareStatement(sql.toString());
 		stmt.setInt(1, regressFile.getLote().getNumeroLote().intValue());
 		rs = stmt.executeQuery();
@@ -98,7 +98,8 @@ public class LoteDao {
 
 			connection.setAutoCommit(false);
 			stmt = connection.prepareStatement(sql.toString());
-			stmt.setInt(1, this.getProximoCodigoLote(tipoLote));
+
+			stmt.setInt(1, regressFile.getLote().getCodigoLote());
 			stmt.setString(2, regressFile.getLote().getCodigoBanco());
 			stmt.setInt(3, regressFile.getLote().getNumeroLote().intValue());
 			stmt.setDate(4, new Date(regressFile.getLote().getDataLote().getTimeInMillis()));

@@ -63,12 +63,7 @@ public class Controller {
 
 	private void run() throws Exception {
 		System.out.println("Iniciando processamento de arquivos...");
-		int i = 1;
-		
-		//Lista de arquivos de retorno para armazenar arquivos de 15 em 15 e definitivo;
-		ArrayList<RegressFile> arquivoRet15 = new ArrayList<>();
-		ArrayList<RegressFile> arquivoRetDef = new ArrayList<>();
-		
+
 		//Obtem uma conexao para utilização em todos os objetos de DAO;
 		Connection conn = ObterConexao.connect(this.getConfigXml());
 		
@@ -87,7 +82,28 @@ public class Controller {
 
 				try {
 					//Arquivo de retorno do tipo DAM de 15 em 15 (chamado de confirmação parcial);
-					arquivoRet15.add(new RegressFile(path, this.getConfigXml(), TipoDamEnum.PARCIAL));
+					RegressFile regressFile15 = new RegressFile(path, this.getConfigXml(), TipoDamEnum.PARCIAL);
+
+					try {
+						//Inserir o lote na base de dados;
+						loteDao.insertLote(regressFile15, TipoDamEnum.PARCIAL);
+
+						//Mover arquivo para pasta Historico conforme ConfigXml;
+						if(!regressFile15.moveFile(regressFile15, 
+								new ConciliacaoFiles(regressFile15.getConfigXml().getPathDam15Historico()+File.separator+regressFile15.getName()))){
+							throw new Exception("O arquivo de retorno não pode ser movido para pasta Historico.");
+						}
+					} catch (Exception e) {
+						if(!regressFile15.moveFile(regressFile15, 
+								new ConciliacaoFiles(regressFile15.getConfigXml().getPathArquivoErro()+File.separator+regressFile15.getName()))){
+							throw new Exception("Erro critico de sistema: O arquivo de retorno não pode ser movido para pasta de ERRO. "+e.getMessage());
+						}
+						
+						new Log(this.getConfigXml().getPathErrorLog()).makeLog(e);
+						new Mail(this.configXml, new ErrorLog(Calendar.getInstance(), e)).sendMail();
+						
+					}
+
 				} catch (Exception e) {
 					this.moverArquivoComErro(path, e);
 				}
@@ -100,7 +116,28 @@ public class Controller {
 				
 				try {
 					//Arquivo de retorno do tipo DAM definitivo (chamado de confirmação definitiva)
-					arquivoRetDef.add(new RegressFile(path, this.getConfigXml(), TipoDamEnum.DEFINITIVO));
+					RegressFile regressFileDef = new RegressFile(path, this.getConfigXml(), TipoDamEnum.DEFINITIVO);
+
+					try {
+						//Inserir o lote e DAMs na base de dados;
+						loteDao.insertLote(regressFileDef, TipoDamEnum.DEFINITIVO);
+						
+						//Mover arquivo para pasta Historico conforme ConfigXml;
+						if(!regressFileDef.moveFile(regressFileDef, 
+								new ConciliacaoFiles(regressFileDef.getConfigXml().getPathDamDefinitivoHistorico()))){
+							throw new Exception("O arquivo de retorno não pode ser movido para pasta Historico Definitivo.");
+						}
+					} catch (Exception e) {
+						if(!regressFileDef.moveFile(regressFileDef, 
+								new ConciliacaoFiles(regressFileDef.getConfigXml().getPathArquivoErro()+File.separator+regressFileDef.getName()))){
+							throw new Exception("Erro critico de sistema: O arquivo de retorno não pode ser movido para pasta de ERRO. "+e.getMessage());
+						}
+						
+						new Log(this.getConfigXml().getPathErrorLog()).makeLog(e);
+						new Mail(this.configXml, new ErrorLog(Calendar.getInstance(), e)).sendMail();
+						
+					}
+
 				} catch (Exception e) {
 					this.moverArquivoComErro(path, e);
 				}
@@ -108,64 +145,12 @@ public class Controller {
 			}
 		}
 		
-		//Se existir algum arquivo de retorno do tipo 15 em 15
-		if(!arquivoRet15.isEmpty()){
-			//Para cada arquivo retorno 15/15 encontrado
-			for (RegressFile regressFile15 : arquivoRet15) {
-				try {
-					//Inserir o lote na base de dados;
-					loteDao.insertLote(regressFile15, TipoDamEnum.PARCIAL);
-
-					//Mover arquivo para pasta Historico conforme ConfigXml;
-					if(!regressFile15.moveFile(regressFile15, 
-							new ConciliacaoFiles(regressFile15.getConfigXml().getPathDam15Historico()+File.separator+regressFile15.getName()))){
-						throw new Exception("O arquivo de retorno não pode ser movido para pasta Historico.");
-					}
-				} catch (Exception e) {
-					if(!regressFile15.moveFile(regressFile15, 
-							new ConciliacaoFiles(regressFile15.getConfigXml().getPathArquivoErro()+File.separator+regressFile15.getName()))){
-						throw new Exception("Erro critico de sistema: O arquivo de retorno não pode ser movido para pasta de ERRO. "+e.getMessage());
-					}
-					
-					new Log(this.getConfigXml().getPathErrorLog()).makeLog(e);
-					new Mail(this.configXml, new ErrorLog(Calendar.getInstance(), e)).sendMail();
-					
-				}
-
-				System.out.println(i+ " arquivo(s) processados");
-				i++;
-			}
-
-		}
+		System.out.println("...Fim do processamento dos arquivos.");
 		
-		if(!arquivoRetDef.isEmpty()){
-			//Para cada arquivo retorno definitivo encontrado
-			for (RegressFile regressFileDef : arquivoRetDef) {
-				try {
-					//Inserir o lote e DAMs na base de dados;
-					loteDao.insertLote(regressFileDef, TipoDamEnum.DEFINITIVO);
-					
-					//Mover arquivo para pasta Historico conforme ConfigXml;
-					if(!regressFileDef.moveFile(regressFileDef, 
-							new ConciliacaoFiles(regressFileDef.getConfigXml().getPathDamDefinitivoHistorico()))){
-						throw new Exception("O arquivo de retorno não pode ser movido para pasta Historico Definitivo.");
-					}
-				} catch (Exception e) {
-					if(!regressFileDef.moveFile(regressFileDef, 
-							new ConciliacaoFiles(regressFileDef.getConfigXml().getPathArquivoErro()+File.separator+regressFileDef.getName()))){
-						throw new Exception("Erro critico de sistema: O arquivo de retorno não pode ser movido para pasta de ERRO. "+e.getMessage());
-					}
-					
-					new Log(this.getConfigXml().getPathErrorLog()).makeLog(e);
-					new Mail(this.configXml, new ErrorLog(Calendar.getInstance(), e)).sendMail();
-					
-				}
-			}
-		}
-		
+		//Efetuada todas as operações, realiza-se o fechamento da conexão, caso esteja aberta;
 		if(!conn.isClosed())
 			conn.close();
-		
+
 	}
 	
 	private void moverArquivoComErro(Path path, Exception e) throws Exception{
