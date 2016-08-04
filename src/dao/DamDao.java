@@ -1,7 +1,6 @@
 package dao;
 
 import vo.Dam;
-import vo.Lote;
 import vo.TipoDamEnum;
 
 import java.sql.Connection;
@@ -10,8 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-
 import arquivo.RegressFile;
 import utilitario.DigitoVerificador;
 
@@ -69,16 +66,18 @@ public class DamDao {
 		stmt = conn.prepareStatement(sql);
 
 		for (Dam dam : lDams) {
-			int lengthDam = dam.getNumDam().length();
+			int lengthDam = String.valueOf(Integer.parseInt(dam.getNumDam())).length();
 			
 			stmt.setInt(1, regressFile.getLote().getCodigoLote());
 			stmt.setInt(2, dam.getNumSeq());
 			stmt.setString(3, dam.getCodigoAgencia());
 			//-- Condicional para calculo de digito verificador do DAM assumindo o tamanho de 7 como legado (por isso a adição do pre fixo zero
 			if(lengthDam == 7){
-				stmt.setString(4, "0"+dam.getNumDam()+DigitoVerificador.obterDigito(Integer.parseInt(dam.getNumDam())));
+				stmt.setString(4, "0"+dam.getNumDam()+DigitoVerificador.obterDigito("0"+dam.getNumDam()));
 			}else if(lengthDam > 7){
-				stmt.setString(4, dam.getNumDam()+DigitoVerificador.obterDigito(Integer.parseInt(dam.getNumDam())));
+				stmt.setString(4, dam.getNumDam()+DigitoVerificador.obterDigito(dam.getNumDam()));
+			}else{
+				stmt.setString(4, "1"+dam.getNumDam()+DigitoVerificador.obterDigito("1"+dam.getNumDam()));
 			}
 			//--
 			stmt.setInt(5, dam.getSeqDuplicacao());

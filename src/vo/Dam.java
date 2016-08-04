@@ -134,7 +134,7 @@ public class Dam {
 	 * @return the numDam + DV mod11
 	 */
 	public String getDigitoVerificador() {
-		return DigitoVerificador.obterDigito(Integer.parseInt(numDam));
+		return DigitoVerificador.obterDigito(numDam);
 	}
 	
 	/**
