@@ -29,7 +29,7 @@ public class TestXmlManipulation {
 					"c:\\dam15Historico",
 					"c:\\damDefinitivoRecebido", 
 					"c:\\damDefinitivoHistorico", 
-					"BB", 
+					"c:\\damComErro", 
 					emailDestinatarios, 
 					"rodrigo@juceb.ba.gov.br", 
 					"envio.ba.gov.br", 

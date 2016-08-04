@@ -19,7 +19,9 @@ public final class RegressTreatment {
 			testDams(regressFile.getDams());
 			testFooter(regressFile);
 		} catch (Exception e) {
-			Exception ex = new Exception(e.getMessage() + " O arquivo que provocou o erro é " + regressFile.getAbsolutePath());
+			Exception ex = new Exception(e.getMessage() + " O arquivo que provocou o erro é " 
+					+ regressFile.getAbsolutePath() +"."
+					+ " Verifique adcionalmente se o arquivo de configuração 'Config.xml' esta com os valores das posições dos campos.");
 			throw ex;
 		}
 
