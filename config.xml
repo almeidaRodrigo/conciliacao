@@ -2,80 +2,85 @@
   <layout>
     <layoutDams>
       <vo.LayoutDam>
-        <attributeName>CodigoLote</attributeName>
+        <attributeName>codigoLote</attributeName>
         <colNumberStart>73</colNumberStart>
         <colNumberEnd>79</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
-        <attributeName>NumSeq</attributeName>
+        <attributeName>numSeq</attributeName>
         <colNumberStart>0</colNumberStart>
         <colNumberEnd>0</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
-        <attributeName>SeqDuplicacao</attributeName>
+        <attributeName>seqDuplicacao</attributeName>
         <colNumberStart>0</colNumberStart>
         <colNumberEnd>0</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
-        <attributeName>CodigoAgencia</attributeName>
+        <attributeName>codigoAgencia</attributeName>
         <colNumberStart>107</colNumberStart>
         <colNumberEnd>115</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
-        <attributeName>NumDam</attributeName>
+        <attributeName>numDam</attributeName>
         <colNumberStart>60</colNumberStart>
         <colNumberEnd>67</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
-        <attributeName>NumReq</attributeName>
+        <attributeName>numReq</attributeName>
         <colNumberStart>0</colNumberStart>
         <colNumberEnd>0</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
-        <attributeName>TipoDocumento</attributeName>
+        <attributeName>tipoDocumento</attributeName>
         <colNumberStart>0</colNumberStart>
         <colNumberEnd>0</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
-        <attributeName>CodigoUsuario</attributeName>
+        <attributeName>codigoUsuario</attributeName>
         <colNumberStart>67</colNumberStart>
         <colNumberEnd>79</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
-        <attributeName>CpfCnpj</attributeName>
+        <attributeName>cpfCnpj</attributeName>
         <colNumberStart>0</colNumberStart>
         <colNumberEnd>0</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
-        <attributeName>DataArrecadacao</attributeName>
+        <attributeName>dataArrecadacao</attributeName>
         <colNumberStart>21</colNumberStart>
         <colNumberEnd>29</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
-        <attributeName>DataCredito</attributeName>
+        <attributeName>dataCredito</attributeName>
         <colNumberStart>0</colNumberStart>
         <colNumberEnd>0</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
-        <attributeName>ValorPago</attributeName>
+        <attributeName>valorPago</attributeName>
         <colNumberStart>81</colNumberStart>
         <colNumberEnd>93</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
-        <attributeName>FormaPagamento</attributeName>
+        <attributeName>formaPagamento</attributeName>
         <colNumberStart>116</colNumberStart>
         <colNumberEnd>117</colNumberEnd>
       </vo.LayoutDam>
       <vo.LayoutDam>
-        <attributeName>ValorTarifa</attributeName>
+        <attributeName>valorTarifa</attributeName>
         <colNumberStart>93</colNumberStart>
         <colNumberEnd>100</colNumberEnd>
+      </vo.LayoutDam>
+      <vo.LayoutDam>
+        <attributeName>codigoRegistro</attributeName>
+        <colNumberStart>0</colNumberStart>
+        <colNumberEnd>1</colNumberEnd>
       </vo.LayoutDam>
     </layoutDams>
   </layout>
   <userBd>rodrigo</userBd>
-  <passBd>---</passBd>
-  <hostBd>---</hostBd>
+  <passBd>teste</passBd>
+  <hostBd>192.168.0.0</hostBd>
   <tipoBanco>oracle</tipoBanco>
   <portaBanco>1521</portaBanco>
   <nomeServicoBanco>prod</nomeServicoBanco>
@@ -120,7 +125,7 @@
     <string>suporte@juceb.ba.gov.br</string>
   </emailDestinoSuporte>
   <emailRemetenteSuporte>rodrigo@juceb.ba.gov.br</emailRemetenteSuporte>
-  <hostNameEmail>*****</hostNameEmail>
+  <hostNameEmail>****</hostNameEmail>
   <passHostEmail></passHostEmail>
   <smtpPort>25</smtpPort>
   <ssl>false</ssl>
