@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import arquivo.RegressFile;
 import vo.Lote;
 import vo.TipoDamEnum;
 
@@ -17,6 +19,7 @@ import vo.TipoDamEnum;
  */
 public class LoteDao {
 	private Connection connection;
+	private DamDao damDao;
 
 	/**
 	 * @param connection
@@ -40,6 +43,20 @@ public class LoteDao {
 		this.connection = connection;
 	}
 	
+	/**
+	 * @return the damDao
+	 */
+	public DamDao getDamDao() {
+		return damDao;
+	}
+
+	/**
+	 * @param damDao the damDao to set
+	 */
+	public void setDamDao(DamDao damDao) {
+		this.damDao = damDao;
+	}
+
 	public int getProximoCodigoLote(TipoDamEnum tipoLote) throws Exception{
 		Connection conn = this.getConnection();
 		String sql;
@@ -59,15 +76,14 @@ public class LoteDao {
 		
 	}
 	
-	public void insertLote(Lote lote, TipoDamEnum tipoLote) throws Exception {
-		Connection conn = this.getConnection();
-		String sql;
+	public void insertLote(RegressFile regressFile, TipoDamEnum tipoLote) throws Exception {
+		StringBuilder sql = new StringBuilder();
 		PreparedStatement stmt;
 		ResultSet rs;
-
-		sql = "select numerolote from "+ tipoLote.getSchemaLote() +" where numerolote = ?";
-		stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, lote.getNumeroLote().intValue());
+		
+		sql.append("select numerolote from "+ tipoLote.getSchemaLote() +" where numerolote = ?");
+		stmt = connection.prepareStatement(sql.toString());
+		stmt.setInt(1, regressFile.getLote().getNumeroLote().intValue());
 		rs = stmt.executeQuery();
 		
 		if (rs.next()) {
@@ -75,19 +91,31 @@ public class LoteDao {
 					+ rs.getString(1)  
 					+". Favor verificar!");
 		} else {
-			sql = "insert into " + tipoLote.getSchemaLote() + " values (?,?,?,?,?,?); ";
+			damDao = new DamDao(connection);
+			
+			sql.delete(0, sql.length());
+			sql.append("insert into " + tipoLote.getSchemaLote() + " values (?,?,?,?,?,?); ");
 
-			stmt = conn.prepareStatement(sql);
+			connection.setAutoCommit(false);
+			stmt = connection.prepareStatement(sql.toString());
 			stmt.setInt(1, this.getProximoCodigoLote(tipoLote));
-			stmt.setString(2, lote.getCodigoBanco());
-			stmt.setInt(3, lote.getNumeroLote().intValue());
-			stmt.setDate(4, new Date(lote.getDataLote().getTimeInMillis()));
-			stmt.setInt(5, lote.getQtdDocs());
-			stmt.setBigDecimal(6, lote.getValorTotal());
+			stmt.setString(2, regressFile.getLote().getCodigoBanco());
+			stmt.setInt(3, regressFile.getLote().getNumeroLote().intValue());
+			stmt.setDate(4, new Date(regressFile.getLote().getDataLote().getTimeInMillis()));
+			stmt.setInt(5, regressFile.getLote().getQtdDocs());
+			stmt.setBigDecimal(6, regressFile.getLote().getValorTotal());
 			
-			System.out.println(stmt);
-			
-			stmt.execute();
+			try {
+				damDao.insertDam(regressFile, tipoLote);
+				stmt.execute();
+				connection.commit();
+				//connection.close();
+			} catch (Exception e) {
+				connection.rollback();
+				//connection.close();
+				throw new Exception("Não foi possivel inserir os DAMs deste lote, verifique o erro a seguir: "+e.getMessage());
+			}
+
 		}
 
 	}

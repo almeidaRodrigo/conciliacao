@@ -6,8 +6,10 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.file.Path;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import conexao.ObterConexao;
 import dao.DamDao;
@@ -39,7 +41,7 @@ public class RegressFile extends ConciliacaoFiles {
 		this.tipoDam = tipoDam;
 		this.populate();
 		this.gerarLote(this);
-		
+		this.setDams(this.geraDataCredito(this.getDams()));
 	}
 
 	/**
@@ -190,11 +192,15 @@ public class RegressFile extends ConciliacaoFiles {
 					new BigInteger(linha.substring(73, 79)), 
 					linha.substring(79, 81), 
 					linha.substring(81, 98));
-			
+
 			while (linha != null) {
 				linha = lerArquivo.readLine();
 				linhas.add(linha);
 			}
+			
+			lerArquivo.close();
+			arq.close();
+			
 		}else{
 			
 			NullPointerException ex = new NullPointerException("O arquivo de retorno está vazio, sem o Header ou não foi reconhecido. "
@@ -202,27 +208,26 @@ public class RegressFile extends ConciliacaoFiles {
 					+ this.getName());
 			throw ex;
 		}
-		
-		for(int index = 1; index < linhas.size(); index++){
-			String idFooter = linhas.get(linhas.size() - 1);
-			
-			if(idFooter != null)
+
+		for(int index = 0; index < linhas.size(); index++){
+			String idFooter = linhas.get((linhas.size()-1));
+
+			if(idFooter != null){
 				if(idFooter.substring(0,1).equals("Z")){
-					String valorTotal = idFooter.substring(7,24);
-					
-					
+					String valorTotal = idFooter.substring(7,25);
+					valorTotal = Integer.parseInt(valorTotal.substring(0, valorTotal.length()-3))+"."+valorTotal.substring(valorTotal.length()-3, valorTotal.length());
+
 					this.trailler = new Trailler(
 							idFooter.substring(0,1), 
 							Integer.parseInt(idFooter.substring(1,7)), 
-							new BigDecimal(
-									valorTotal.substring(0, valorTotal.length()-2)
-									+"."
-									+valorTotal.substring(valorTotal.length()-2, valorTotal.length())));
-					linhas.remove(linhas.size() - 1);
+							new BigDecimal(NumberFormat.getInstance(Locale.US).parse(valorTotal).toString()));
+
+					linhas.remove((linhas.size()-1));
 					break;
 				}
+			}
 
-			linhas.remove(linhas.size() - 1);
+			linhas.remove((linhas.size()-1));
 		}
 
 		for (String lin : linhas) {
@@ -276,7 +281,6 @@ public class RegressFile extends ConciliacaoFiles {
 		}
 
 		this.setTotalValorDams(this.somaDams(this.getDams()));
-		
 		this.validate();
 
 	}
@@ -299,10 +303,41 @@ public class RegressFile extends ConciliacaoFiles {
 		BigDecimal somaDams = new BigDecimal("0");
 		
 		for (Dam dam : lDams) {
-			somaDams = somaDams.add(dam.getValorPago());
+			if(dam.getValorPago()!= null)
+				somaDams = somaDams.add(dam.getValorPago());
+		}
+
+		return somaDams;
+	}
+	
+	private ArrayList<Dam> geraDataCredito(ArrayList<Dam> lDams){
+		ArrayList<Dam> lDamsRetorno = new ArrayList<>();
+		Calendar novaData;
+		
+		for (Dam dam : lDams) {
+			novaData = Calendar.getInstance();
+			novaData.setTimeInMillis(dam.getDataArrecadacao().getTimeInMillis());
+			
+			switch (dam.getDataArrecadacao().get(Calendar.DAY_OF_WEEK)) {
+			case 5:
+			case 6:
+				novaData.add(Calendar.DAY_OF_MONTH, 4);
+				break;
+			case 7:
+				novaData.add(Calendar.DAY_OF_MONTH, 3);
+				break;
+			default:
+				novaData.add(Calendar.DAY_OF_MONTH, 2);
+				break;
+			}
+			
+			dam.setDataCredito(novaData);
+			
+			lDamsRetorno.add(dam);
+			
 		}
 		
-		return somaDams;
+		return lDamsRetorno;
 	}
 	
 	private Boolean validate() throws Exception{

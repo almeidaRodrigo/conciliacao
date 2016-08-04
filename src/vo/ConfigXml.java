@@ -26,7 +26,7 @@ public class ConfigXml {
 	 * @param pathDam15Historico
 	 * @param pathDamDefinitivoRecebido
 	 * @param pathDamDefinitivoHistorico
-	 * @param nomeBancoConvenio
+	 * @param pathArquivoErro
 	 * @param emailDestinoSuporte
 	 * @param emailRemetenteSuporte
 	 * @param hostNameEmail
@@ -40,7 +40,7 @@ public class ConfigXml {
 	 */
 	public ConfigXml(String userBd, String passBd, String hostBd, String tipoBanco, int portaBanco, 
 			String nomeServicoBanco, String pathDam15Recebido, String pathDam15Historico,
-			String pathDamDefinitivoRecebido, String pathDamDefinitivoHistorico, String nomeBancoConvenio,
+			String pathDamDefinitivoRecebido, String pathDamDefinitivoHistorico, String pathArquivoErro,
 			ArrayList<String> emailDestinoSuporte, String emailRemetenteSuporte, String hostNameEmail,
 			String passHostEmail, String smtpPort, Boolean ssl, String userNameEmail, String subjectEmail,
 			String messageEmail, Long intervaloMilisegundos, String pathErrorLog) {
@@ -57,7 +57,7 @@ public class ConfigXml {
 		this.setPathDam15Historico(pathDam15Historico);
 		this.setPathDamDefinitivoRecebido(pathDamDefinitivoRecebido);
 		this.setPathDamDefinitivoHistorico(pathDamDefinitivoHistorico);
-		this.nomeBancoConvenio = nomeBancoConvenio;
+		this.setPathArquivoErro(pathArquivoErro);
 		this.emailDestinoSuporte = emailDestinoSuporte;
 		this.emailRemetenteSuporte = emailRemetenteSuporte;
 		this.hostNameEmail = hostNameEmail;
@@ -104,7 +104,7 @@ public class ConfigXml {
 	private Path pathDamDefinitivoHistorico;
 	
 	/** The nome banco convenio. */
-	private String nomeBancoConvenio;
+	private Path pathArquivoErro;
 	
 	/** The email destino suporte. */
 	private ArrayList<String> emailDestinoSuporte;
@@ -265,7 +265,7 @@ public class ConfigXml {
 	 * @return the path dam historico
 	 */
 	public Path getPathDam15Historico() {
-		return this.getPathDam15Historico();
+		return this.pathDam15Historico;
 	}
 	
 	/**
@@ -309,19 +309,19 @@ public class ConfigXml {
 	/**
 	 * Gets the nome banco convenio.
 	 *
-	 * @return the nome banco convenio
+	 * @return the path Arquivo Erro
 	 */
-	public String getNomeBancoConvenio() {
-		return nomeBancoConvenio;
+	public Path getPathArquivoErro() {
+		return pathArquivoErro;
 	}
 	
 	/**
-	 * Sets the nome banco convenio.
+	 * Sets the path Arquivo Erro.
 	 *
-	 * @param nomeBancoConvenio the new nome banco convenio
+	 * @param pathArquivoErro the new path Arquivo Erro
 	 */
-	public void setNomeBancoConvenio(String nomeBancoConvenio) {
-		this.nomeBancoConvenio = nomeBancoConvenio;
+	public void setPathArquivoErro(String pathArquivoErro) {
+		this.pathArquivoErro =  FileSystems.getDefault().getPath(pathArquivoErro + File.separator + Calendar.getInstance().get(Calendar.YEAR));
 	}
 	
 	/**
