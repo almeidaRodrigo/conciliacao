@@ -57,6 +57,10 @@ public class ConciliacaoFiles extends File implements IFileConciliacao {
 	 * @see arquivo.IFileConciliacao#moveFile(arquivo.ConciliacaoFiles, arquivo.ConciliacaoFiles)
 	 */
 	public Boolean moveFile(ConciliacaoFiles fileIn, ConciliacaoFiles fileOut) throws Exception {
+		if(fileOut.exists()){
+			fileOut.delete();
+		}
+		
 		return fileIn.renameTo(fileOut);
 
 	}

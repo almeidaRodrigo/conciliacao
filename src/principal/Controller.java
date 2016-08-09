@@ -64,11 +64,8 @@ public class Controller {
 	private void run() throws Exception {
 		System.out.println("Iniciando processamento de arquivos...");
 
-		//Obtem uma conexao para utilização em todos os objetos de DAO;
-		Connection conn = ObterConexao.connect(this.getConfigXml());
-		
-		//Instancia os objetos para operação de acesso a dados e manipulação
-		LoteDao loteDao = new LoteDao(conn);
+		Connection conn = null;
+		LoteDao loteDao = null;
 		
 		//Arquivos dentro dos diretorios definidos no ConfigXml para DAMs de 15 em 15 e Definitivos;
 		File[] listFiles15, listFilesDef;
@@ -77,6 +74,11 @@ public class Controller {
 		
 		//Preenchendo a lista com arquivo de retorno com DAMs do tipo 15 em 15.
 		if(listFiles15 != null){
+			//Obtem uma conexao para utilização em todos os objetos de DAO;
+			conn = ObterConexao.connect(this.getConfigXml());
+			//Instancia os objetos para operação de acesso a dados e manipulação
+			loteDao = new LoteDao(conn);
+			
 			for (File sPath : listFiles15) {
 				Path path = FileSystems.getDefault().getPath(sPath.getPath());
 
@@ -111,6 +113,11 @@ public class Controller {
 		}
 		
 		if(listFilesDef != null){
+			//Obtem uma conexao para utilização em todos os objetos de DAO;
+			conn = ObterConexao.connect(this.getConfigXml());
+			//Instancia os objetos para operação de acesso a dados e manipulação
+			loteDao = new LoteDao(conn);
+			
 			for (File sPath : listFilesDef) {
 				Path path = FileSystems.getDefault().getPath(sPath.getPath());
 				
@@ -147,9 +154,12 @@ public class Controller {
 		
 		System.out.println("...Fim do processamento dos arquivos.");
 		
-		//Efetuada todas as operações, realiza-se o fechamento da conexão, caso esteja aberta;
-		if(!conn.isClosed())
-			conn.close();
+		//Realiza-se o fechamento da conexão, caso esteja aberta;
+		if(conn != null){
+			if(!conn.isClosed())
+				conn.close();
+		}
+		
 
 	}
 	

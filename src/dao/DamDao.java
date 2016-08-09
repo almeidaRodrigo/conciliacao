@@ -61,8 +61,17 @@ public class DamDao {
 		String sql;
 		PreparedStatement stmt = conn.prepareStatement("");
 		ArrayList<Dam> lDams = regressFile.getDams();
+		
+		/*
+		 * O IF abaixo foi deselegantemente inserido neste metodo porque a tabela DAM_DEFINITIVO esta desnormatizada, contendo campos que não deveria!
+		 * A tabela foi deixada como esta, devido a receio de impacto negativo pós alteração para algum sistema, ainda desconhecido deste analista.
+		 */
+		if(tipoDam == TipoDamEnum.DEFINITIVO){
+			sql = "insert into " + tipoDam.getSchemaDam() + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, null,null,null); ";
+		}else{
+			sql = "insert into " + tipoDam.getSchemaDam() + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); ";
+		}
 
-		sql = "insert into " + tipoDam.getSchemaDam() + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); ";
 		stmt = conn.prepareStatement(sql);
 
 		for (Dam dam : lDams) {
