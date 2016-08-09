@@ -131,7 +131,7 @@ public class Controller {
 						
 						//Mover arquivo para pasta Historico conforme ConfigXml;
 						if(!regressFileDef.moveFile(regressFileDef, 
-								new ConciliacaoFiles(regressFileDef.getConfigXml().getPathDamDefinitivoHistorico()))){
+								new ConciliacaoFiles(regressFileDef.getConfigXml().getPathDamDefinitivoHistorico()+File.separator+regressFileDef.getName()))){
 							throw new Exception("O arquivo de retorno não pode ser movido para pasta Historico Definitivo.");
 						}
 					} catch (Exception e) {

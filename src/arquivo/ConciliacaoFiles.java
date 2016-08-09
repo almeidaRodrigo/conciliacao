@@ -59,6 +59,8 @@ public class ConciliacaoFiles extends File implements IFileConciliacao {
 	public Boolean moveFile(ConciliacaoFiles fileIn, ConciliacaoFiles fileOut) throws Exception {
 		if(fileOut.exists()){
 			fileOut.delete();
+		}else if(!fileOut.getParentFile().exists()){
+			fileOut.getParentFile().mkdirs();
 		}
 		
 		return fileIn.renameTo(fileOut);

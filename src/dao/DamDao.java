@@ -103,8 +103,8 @@ public class DamDao {
 			stmt.setBigDecimal(13, null);
 			stmt.setBigDecimal(14, dam.getValorPago());
 			stmt.setString(15, String.valueOf(dam.getFormaPagamento()));
-			stmt.setBigDecimal(16, null);
-			
+			stmt.setBigDecimal(16, dam.getValorTarifa());
+
 			stmt.addBatch();
 		}
 
@@ -134,5 +134,7 @@ public class DamDao {
 		return retorno;
 		
 	}
+	
+	
 
 }

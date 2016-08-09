@@ -41,7 +41,10 @@ public class RegressFile extends ConciliacaoFiles {
 		this.tipoDam = tipoDam;
 		this.populate();
 		this.gerarLote(this);
+		
 		this.setDams(this.geraDataCredito(this.getDams()));
+		this.setDams(this.atualizaSeqDup());
+
 	}
 
 	/**
@@ -342,6 +345,34 @@ public class RegressFile extends ConciliacaoFiles {
 	
 	private Boolean validate() throws Exception{
 		return RegressTreatment.isValidRegressFile(this);
+	}
+	
+	private ArrayList<Dam> incrementaSeqDup(ArrayList<Dam> lDams, Dam dam){
+		ArrayList<Dam> lDamsRetorno = new ArrayList<>();
+		int seqDuplicacao = -1;
+		
+		for (Dam d : lDams) {
+			if(d.getNumDam().equals(dam.getNumDam())){
+				seqDuplicacao += 1;
+				d.setSeqDuplicacao(seqDuplicacao);
+			}
+			
+			lDamsRetorno.add(d);
+		}
+		
+		return lDamsRetorno;
+	}
+	
+	private ArrayList<Dam> atualizaSeqDup(){
+		ArrayList<Dam> lDams = this.getDams();
+		ArrayList<Dam> lDamsRetorno = null;
+		
+		for (Dam dam : lDams) {
+			lDamsRetorno = this.incrementaSeqDup(lDams, dam);
+		}
+		
+		return lDamsRetorno;
+
 	}
 
 }
