@@ -107,6 +107,8 @@ public class Controller {
 					}
 
 				} catch (Exception e) {
+					new Log(this.getConfigXml().getPathErrorLog()).makeLog(e);
+					new Mail(this.configXml, new ErrorLog(Calendar.getInstance(), e)).sendMail();
 					this.moverArquivoComErro(path, e);
 				}
 			}
@@ -146,6 +148,8 @@ public class Controller {
 					}
 
 				} catch (Exception e) {
+					new Log(this.getConfigXml().getPathErrorLog()).makeLog(e);
+					new Mail(this.configXml, new ErrorLog(Calendar.getInstance(), e)).sendMail();
 					this.moverArquivoComErro(path, e);
 				}
 				
