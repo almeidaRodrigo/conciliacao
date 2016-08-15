@@ -2,10 +2,8 @@ package principal;
 
 import java.io.File;
 import java.nio.file.FileSystems;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import arquivo.ConciliacaoFiles;
@@ -13,12 +11,10 @@ import arquivo.Log;
 import arquivo.ManipulateXml;
 import arquivo.RegressFile;
 import conexao.ObterConexao;
-import dao.DamDao;
 import dao.LoteDao;
 import email.Mail;
 import erro.ErrorLog;
 import vo.ConfigXml;
-import vo.Lote;
 import vo.TipoDamEnum;
 
 public class Controller {
@@ -73,7 +69,7 @@ public class Controller {
 		listFilesDef = new File(this.getConfigXml().getPathDamDefinitivoRecebido().toUri()).listFiles();
 		
 		//Preenchendo a lista com arquivo de retorno com DAMs do tipo 15 em 15.
-		if(listFiles15 != null){
+		if(listFiles15.length > 0){
 			//Obtem uma conexao para utilização em todos os objetos de DAO;
 			conn = ObterConexao.connect(this.getConfigXml());
 			//Instancia os objetos para operação de acesso a dados e manipulação
@@ -114,7 +110,7 @@ public class Controller {
 			}
 		}
 		
-		if(listFilesDef != null){
+		if(listFilesDef.length > 0){
 			//Obtem uma conexao para utilização em todos os objetos de DAO;
 			conn = ObterConexao.connect(this.getConfigXml());
 			//Instancia os objetos para operação de acesso a dados e manipulação

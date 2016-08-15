@@ -2,12 +2,10 @@ package dao;
 
 import vo.Dam;
 import vo.TipoDamEnum;
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import arquivo.RegressFile;
 import utilitario.DigitoVerificador;
@@ -59,7 +57,7 @@ public class DamDao {
 		
 		Connection conn = this.getConnection();
 		String sql;
-		PreparedStatement stmt = conn.prepareStatement("");
+		PreparedStatement stmt;
 		ArrayList<Dam> lDams = regressFile.getDams();
 		
 		/*
@@ -67,16 +65,16 @@ public class DamDao {
 		 * A tabela foi deixada como esta, devido a receio de impacto negativo pós alteração para algum sistema, ainda desconhecido deste analista.
 		 */
 		if(tipoDam == TipoDamEnum.DEFINITIVO){
-			sql = "insert into " + tipoDam.getSchemaDam() + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, null,null,null); ";
+			sql = "insert into " + tipoDam.getSchemaDam() + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, null,null,null) ";
 		}else{
-			sql = "insert into " + tipoDam.getSchemaDam() + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); ";
+			sql = "insert into " + tipoDam.getSchemaDam() + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 		}
 
 		stmt = conn.prepareStatement(sql);
 
 		for (Dam dam : lDams) {
-			int lengthDam = String.valueOf(Integer.parseInt(dam.getNumDam())).length();
-			
+			int lengthDam = this.retornarLengthDam(dam);
+
 			stmt.setInt(1, regressFile.getLote().getCodigoLote());
 			stmt.setInt(2, dam.getNumSeq());
 			stmt.setString(3, dam.getCodigoAgencia());
@@ -116,25 +114,41 @@ public class DamDao {
 		}
 
 	}
+	
+	private int retornarLengthDam(Dam dam) throws Exception{
+		return String.valueOf(Integer.parseInt(dam.getNumDam())).length();
+	}
 
-	public int countDam(String numDam, TipoDamEnum tipoDam) throws SQLException{
-		Connection conn = this.getConnection();
+	public int countDam(String numDam, TipoDamEnum tipoDam) throws Exception{
+		int retorno, lengthDam;
+		String numDamComDig;
+		Dam damTemp = new Dam();
 		String sql = "select count(*) from " + tipoDam.getSchemaDam() +" where numdam = ?";
+		Connection conn = this.getConnection();
 		PreparedStatement stmt = conn.prepareStatement(sql);;
 		ResultSet rs = null;
-		int retorno;
-
-		stmt.setString(1, numDam);
 		
+		damTemp.setNumDam(numDam);
+		lengthDam = this.retornarLengthDam(damTemp);
+
+		if(lengthDam == 7){
+			numDamComDig = "0"+damTemp.getNumDam()+DigitoVerificador.obterDigito("0"+damTemp.getNumDam());
+		}else if(lengthDam < 7){
+			numDamComDig = "1"+damTemp.getNumDam()+DigitoVerificador.obterDigito("1"+damTemp.getNumDam());
+		}else{
+			numDamComDig = damTemp.getNumDam()+DigitoVerificador.obterDigito(damTemp.getNumDam());
+		}
+		
+		stmt.setString(1, numDamComDig);
+
 		rs = stmt.executeQuery();
 		rs.next();
 		retorno = rs.getInt(1);
-		
+
 		conn.close();
 		return retorno;
 		
 	}
-	
-	
+
 
 }
