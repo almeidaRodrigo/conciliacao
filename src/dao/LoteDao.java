@@ -94,7 +94,7 @@ public class LoteDao {
 			damDao = new DamDao(connection);
 			
 			sql.delete(0, sql.length());
-			sql.append("insert into " + tipoLote.getSchemaLote() + " values (?,?,?,?,?,?); ");
+			sql.append("insert into " + tipoLote.getSchemaLote() + " values (?,?,?,?,?,?) ");
 
 			connection.setAutoCommit(false);
 			stmt = connection.prepareStatement(sql.toString());
@@ -105,15 +105,13 @@ public class LoteDao {
 			stmt.setDate(4, new Date(regressFile.getLote().getDataLote().getTimeInMillis()));
 			stmt.setInt(5, regressFile.getLote().getQtdDocs());
 			stmt.setBigDecimal(6, regressFile.getLote().getValorTotal());
-			
+
 			try {
-				damDao.insertDam(regressFile, tipoLote);
 				stmt.execute();
+				damDao.insertDam(regressFile, tipoLote);
 				connection.commit();
-				//connection.close();
 			} catch (Exception e) {
 				connection.rollback();
-				//connection.close();
 				throw new Exception("Não foi possivel inserir os DAMs deste lote, verifique o erro a seguir: "+e.getMessage());
 			}
 

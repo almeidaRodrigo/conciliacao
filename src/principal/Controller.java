@@ -2,10 +2,8 @@ package principal;
 
 import java.io.File;
 import java.nio.file.FileSystems;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import arquivo.ConciliacaoFiles;
@@ -13,12 +11,10 @@ import arquivo.Log;
 import arquivo.ManipulateXml;
 import arquivo.RegressFile;
 import conexao.ObterConexao;
-import dao.DamDao;
 import dao.LoteDao;
 import email.Mail;
 import erro.ErrorLog;
 import vo.ConfigXml;
-import vo.Lote;
 import vo.TipoDamEnum;
 
 public class Controller {
@@ -64,11 +60,8 @@ public class Controller {
 	private void run() throws Exception {
 		System.out.println("Iniciando processamento de arquivos...");
 
-		//Obtem uma conexao para utilização em todos os objetos de DAO;
-		Connection conn = ObterConexao.connect(this.getConfigXml());
-		
-		//Instancia os objetos para operação de acesso a dados e manipulação
-		LoteDao loteDao = new LoteDao(conn);
+		Connection conn = null;
+		LoteDao loteDao = null;
 		
 		//Arquivos dentro dos diretorios definidos no ConfigXml para DAMs de 15 em 15 e Definitivos;
 		File[] listFiles15, listFilesDef;
@@ -76,7 +69,12 @@ public class Controller {
 		listFilesDef = new File(this.getConfigXml().getPathDamDefinitivoRecebido().toUri()).listFiles();
 		
 		//Preenchendo a lista com arquivo de retorno com DAMs do tipo 15 em 15.
-		if(listFiles15 != null){
+		if(listFiles15.length > 0){
+			//Obtem uma conexao para utilização em todos os objetos de DAO;
+			conn = ObterConexao.connect(this.getConfigXml());
+			//Instancia os objetos para operação de acesso a dados e manipulação
+			loteDao = new LoteDao(conn);
+			
 			for (File sPath : listFiles15) {
 				Path path = FileSystems.getDefault().getPath(sPath.getPath());
 
@@ -105,12 +103,19 @@ public class Controller {
 					}
 
 				} catch (Exception e) {
+					new Log(this.getConfigXml().getPathErrorLog()).makeLog(e);
+					new Mail(this.configXml, new ErrorLog(Calendar.getInstance(), e)).sendMail();
 					this.moverArquivoComErro(path, e);
 				}
 			}
 		}
 		
-		if(listFilesDef != null){
+		if(listFilesDef.length > 0){
+			//Obtem uma conexao para utilização em todos os objetos de DAO;
+			conn = ObterConexao.connect(this.getConfigXml());
+			//Instancia os objetos para operação de acesso a dados e manipulação
+			loteDao = new LoteDao(conn);
+			
 			for (File sPath : listFilesDef) {
 				Path path = FileSystems.getDefault().getPath(sPath.getPath());
 				
@@ -124,7 +129,7 @@ public class Controller {
 						
 						//Mover arquivo para pasta Historico conforme ConfigXml;
 						if(!regressFileDef.moveFile(regressFileDef, 
-								new ConciliacaoFiles(regressFileDef.getConfigXml().getPathDamDefinitivoHistorico()))){
+								new ConciliacaoFiles(regressFileDef.getConfigXml().getPathDamDefinitivoHistorico()+File.separator+regressFileDef.getName()))){
 							throw new Exception("O arquivo de retorno não pode ser movido para pasta Historico Definitivo.");
 						}
 					} catch (Exception e) {
@@ -139,6 +144,8 @@ public class Controller {
 					}
 
 				} catch (Exception e) {
+					new Log(this.getConfigXml().getPathErrorLog()).makeLog(e);
+					new Mail(this.configXml, new ErrorLog(Calendar.getInstance(), e)).sendMail();
 					this.moverArquivoComErro(path, e);
 				}
 				
@@ -147,9 +154,12 @@ public class Controller {
 		
 		System.out.println("...Fim do processamento dos arquivos.");
 		
-		//Efetuada todas as operações, realiza-se o fechamento da conexão, caso esteja aberta;
-		if(!conn.isClosed())
-			conn.close();
+		//Realiza-se o fechamento da conexão, caso esteja aberta;
+		if(conn != null){
+			if(!conn.isClosed())
+				conn.close();
+		}
+		
 
 	}
 	
