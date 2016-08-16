@@ -352,9 +352,9 @@ public class RegressFile extends ConciliacaoFiles {
 		int seqDuplicacao = -1;
 		
 		for (Dam d : lDams) {
-			if(d.getNumDam().equals(dam.getNumDam())){
+			if(d.getNumDam().equals(dam.getNumDam()) ){
 				seqDuplicacao += 1;
-				d.setSeqDuplicacao(seqDuplicacao);
+				d.setSeqDuplicacao(d.getSeqDuplicacao() + seqDuplicacao);
 			}
 			
 			lDamsRetorno.add(d);

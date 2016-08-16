@@ -4,7 +4,8 @@ import java.io.File;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.Calendar;
-
+import org.apache.commons.mail.EmailException;
+import email.Mail;
 import erro.ErrorLog;
 
 public class Start {
@@ -14,8 +15,9 @@ public class Start {
 	 *
 	 * @param args the arguments: argument 0 = file name of the config; argument 1 = file name of the log;
 	 * @throws InterruptedException the interrupted exception
+	 * @throws EmailException 
 	 */
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException, EmailException {
 		//TODO: efetuar teste para /? ou ? e exibir uma ajuda
 		
 		try {
@@ -28,7 +30,9 @@ public class Start {
 				Path logPath = FileSystems.getDefault().getPath(System.getProperty("user.dir"), File.separator, "logError.txt");
 				new Controller(configPath, logPath);
 			} catch (Exception e2) {
-				System.out.println(new ErrorLog(Calendar.getInstance(), e2).toString());
+				e2.printStackTrace();
+				new Mail(new ErrorLog(Calendar.getInstance(), e2)).sendMail();
+
 				//TODO: caso nao consiga slavar o arquivo padrão com erro... exibir mensagem grafica e parar a execucao.
 			}
 			
