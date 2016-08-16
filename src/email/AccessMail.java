@@ -3,6 +3,14 @@ package email;
 import vo.ConfigXml;
 
 public class AccessMail {
+	
+	public AccessMail() {
+		this.hostName = "envio.ba.gov.br";
+		this.smtpPort = 25;
+		this.ssl = Boolean.FALSE;
+		this.user = "";
+		this.pass = "";
+	}
 
 	/**
 	 * @param hostName

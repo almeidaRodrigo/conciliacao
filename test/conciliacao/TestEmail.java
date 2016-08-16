@@ -1,12 +1,5 @@
 package conciliacao;
 
-import java.util.Calendar;
-
-import arquivo.ManipulateXml;
-import email.Mail;
-import erro.ErrorLog;
-import vo.ConfigXml;
-
 public class TestEmail {
 	/*
 

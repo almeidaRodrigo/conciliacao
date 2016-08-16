@@ -25,11 +25,11 @@ public class TestXmlManipulation {
 					"oracle",
 					1521,
 					"prod",
-					"c:\\dam15Recebido", 
-					"c:\\dam15Historico",
-					"c:\\damDefinitivoRecebido", 
-					"c:\\damDefinitivoHistorico", 
-					"c:\\damComErro", 
+					"y:\\bb", 
+					"d:\\Conciliacao\\historico\\bb\\2016",
+					"y:\\bbcon", 
+					"d:\\Conciliacao\\historicoD2\\bb\\2016", 
+					"d:\\Concialicaov2\\damComErro", 
 					emailDestinatarios, 
 					"rodrigo@juceb.ba.gov.br", 
 					"envio.ba.gov.br", 
@@ -37,10 +37,10 @@ public class TestXmlManipulation {
 					"25", 
 					false, 
 					"",
-					"Assunto do Email",
-					"Mensagem inicial do email",
-					(long) 6000,
-					"c:\\erroConciliacao.txt"));
+					"ATENÇÃO: Erro Conciliação Bancária - Java",
+					"Foi detectada inconsistência na execução do sistema: ",
+					(long) 900000,
+					"d:\\Concialicaov2\\erroConciliacao.txt"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

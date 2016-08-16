@@ -7,6 +7,21 @@ import erro.ErrorLog;
 import vo.ConfigXml;
 
 public class Mail {
+	
+	public Mail(ErrorLog errorLog) {
+		ArrayList<Contact> lContatos = new ArrayList<>();
+		
+		lContatos.add(new Contact("suporte@juceb.ba.gov.br"));
+
+		this.subject = "Erro Conciliação - Java";
+		this.message = "Verifique a mensagem a seguir: ";
+		this.contactTo = lContatos;
+		this.contactFrom = new Contact("rodrigo.santana@juceb.ba.gov.br");
+		this.access = new AccessMail();
+		this.errorLog = errorLog;
+		
+		this.buildMail();
+	}
 
 	/**
 	 * @param configXml

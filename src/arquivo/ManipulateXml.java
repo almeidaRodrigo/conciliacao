@@ -12,6 +12,11 @@ import xml.GeradorXml;
 
 public class ManipulateXml extends ConciliacaoFiles {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public ManipulateXml(Path path) {
 		super(path);
 		//Efetua a leitura do arquivo config.xml dentro da pasta do arquivo JAR (executavel deste projeto)
