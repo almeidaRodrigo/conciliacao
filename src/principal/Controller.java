@@ -50,19 +50,17 @@ public class Controller {
 		this.setLog(new Log(this.configXml.getPathErrorLog()));
 
 		while (true) {
-			//System.out.println("Inciciando tempo de espera pré definido...");
+			System.out.println("Inciciando tempo de espera pré definido...");
 			Thread.sleep(this.configXml.getIntervaloMilisegundos());
-			//System.out.println("...tempo de espera pré definido finalizado!");
+			System.out.println("...tempo de espera pré definido finalizado!");
 			this.run();
-			//System.out.println("Finalizado laço de repetição! Aplicação entrando em modo espera...");
+			System.out.println("Finalizado laço de repetição! Aplicação entrando em modo espera...");
 		}
 	}
 
 	private void run() throws Exception {
-		//System.out.println("Iniciando processamento de arquivos...");
-
+		System.out.println("Iniciando processamento de arquivos...");
 		Connection conn = null;
-		LoteDao loteDao = null;
 
 		// Arquivos dentro dos diretorios definidos no ConfigXml para DAMs de 15
 		// em 15 e Definitivos;
@@ -75,53 +73,11 @@ public class Controller {
 			if (listFiles15.length > 0) {
 				// Obtem uma conexao para utilização em todos os objetos de DAO;
 				conn = ObterConexao.connect(this.getConfigXml());
-				// Instancia os objetos para operação de acesso a dados e
-				// manipulação
-				loteDao = new LoteDao(conn);
-
-				for (File sPath : listFiles15) {
-					if (sPath.isFile()) {
-						Path path = FileSystems.getDefault().getPath(sPath.getPath());
-
-						try {
-							// Arquivo de retorno do tipo DAM de 15 em 15
-							// (chamado
-							// de confirmação parcial);
-							RegressFile regressFile15 = new RegressFile(path, this.getConfigXml(), TipoDamEnum.PARCIAL);
-
-							try {
-								// Inserir o lote na base de dados;
-								loteDao.insertLote(regressFile15, TipoDamEnum.PARCIAL);
-
-								// Mover arquivo para pasta Historico conforme
-								// ConfigXml;
-								if (!regressFile15.moveFile(regressFile15,
-										new ConciliacaoFiles(regressFile15.getConfigXml().getPathDam15Historico()
-												+ File.separator + regressFile15.getName()))) {
-									throw new Exception(
-											"O arquivo de retorno não pode ser movido para pasta Historico.");
-								}
-							} catch (Exception e) {
-								if (!regressFile15.moveFile(regressFile15,
-										new ConciliacaoFiles(regressFile15.getConfigXml().getPathArquivoErro()
-												+ File.separator + regressFile15.getName()))) {
-									throw new Exception(
-											"Erro critico de sistema: O arquivo de retorno não pode ser movido para pasta de ERRO. "
-													+ e.getMessage());
-								}
-
-								new Log(this.getConfigXml().getPathErrorLog()).makeLog(e);
-								new Mail(this.configXml, new ErrorLog(Calendar.getInstance(), e)).sendMail();
-
-							}
-
-						} catch (Exception e) {
-							new Log(this.getConfigXml().getPathErrorLog()).makeLog(e);
-							new Mail(this.configXml, new ErrorLog(Calendar.getInstance(), e)).sendMail();
-							this.moverArquivoComErro(path, e);
-						}
-					}
-				}
+				
+				// Objeto para operação de acesso a dados e manipulação
+				this.procArquivo(new LoteDao(conn), listFiles15, TipoDamEnum.PARCIAL);
+				listFiles15 = null;
+				
 			}
 
 		// Preenchendo a lista com arquivo de retorno com DAMs do tipo definitivo.
@@ -129,58 +85,14 @@ public class Controller {
 			if (listFilesDef.length > 0) {
 				// Obtem uma conexao para utilização em todos os objetos de DAO;
 				conn = ObterConexao.connect(this.getConfigXml());
-				// Instancia os objetos para operação de acesso a dados e
-				// manipulação
-				loteDao = new LoteDao(conn);
-
-				for (File sPath : listFilesDef) {
-					if (sPath.isFile()) {
-						Path path = FileSystems.getDefault().getPath(sPath.getPath());
-
-						try {
-							// Arquivo de retorno do tipo DAM definitivo
-							// (chamado de
-							// confirmação definitiva)
-							RegressFile regressFileDef = new RegressFile(path, this.getConfigXml(),
-									TipoDamEnum.DEFINITIVO);
-
-							try {
-								// Inserir o lote e DAMs na base de dados;
-								loteDao.insertLote(regressFileDef, TipoDamEnum.DEFINITIVO);
-
-								// Mover arquivo para pasta Historico conforme
-								// ConfigXml;
-								if (!regressFileDef.moveFile(regressFileDef,
-										new ConciliacaoFiles(
-												regressFileDef.getConfigXml().getPathDamDefinitivoHistorico()
-														+ File.separator + regressFileDef.getName()))) {
-									throw new Exception(
-											"O arquivo de retorno não pode ser movido para pasta Historico Definitivo.");
-								}
-							} catch (Exception e) {
-								if (!regressFileDef.moveFile(regressFileDef,
-										new ConciliacaoFiles(regressFileDef.getConfigXml().getPathArquivoErro()
-												+ File.separator + regressFileDef.getName()))) {
-									throw new Exception(
-											"Erro critico de sistema: O arquivo de retorno não pode ser movido para pasta de ERRO. "
-													+ e.getMessage());
-								}
-
-								new Log(this.getConfigXml().getPathErrorLog()).makeLog(e);
-								new Mail(this.configXml, new ErrorLog(Calendar.getInstance(), e)).sendMail();
-
-							}
-
-						} catch (Exception e) {
-							new Log(this.getConfigXml().getPathErrorLog()).makeLog(e);
-							new Mail(this.configXml, new ErrorLog(Calendar.getInstance(), e)).sendMail();
-							this.moverArquivoComErro(path, e);
-						}
-					}
-				}
+				
+				// Objeto para operação de acesso a dados e manipulação
+				this.procArquivo(new LoteDao(conn), listFilesDef, TipoDamEnum.DEFINITIVO);
+				listFilesDef = null;
+				
 			}
 
-		//System.out.println("...Fim do processamento dos arquivos.");
+		System.out.println("...Fim do processamento dos arquivos.");
 
 		// Realiza-se o fechamento da conexão, caso esteja aberta;
 		if (conn != null) {
@@ -188,6 +100,58 @@ public class Controller {
 				conn.close();
 		}
 
+	}
+	
+	private void procArquivo(LoteDao loteDao, File[] listFiles, TipoDamEnum tipoDam) throws Exception{
+		for (File fPath : listFiles) {
+			if (fPath.isFile()) {
+				Path path = FileSystems.getDefault().getPath(fPath.getPath());
+				Path pathHistorico = null;
+				
+				try {
+					// Arquivo de retorno
+					RegressFile regressFile = new RegressFile(path, this.getConfigXml(), tipoDam);
+
+					try {
+						// Inserir o lote na base de dados;
+						loteDao.insertLote(regressFile, tipoDam);
+
+						if(tipoDam.equals(TipoDamEnum.PARCIAL)){
+							pathHistorico = regressFile.getConfigXml().getPathDam15Historico();
+						}else if (tipoDam.equals(TipoDamEnum.DEFINITIVO)){
+							pathHistorico = regressFile.getConfigXml().getPathDamDefinitivoHistorico();
+						}else{
+							throw new Exception("Erro gerado no Controller: Não foi possivel determinar o tipo de DAM.");
+						}
+
+						// Mover arquivo para pasta Historico conforme
+						// ConfigXml e TipoDam;
+						if (!regressFile.moveFile(regressFile,
+								new ConciliacaoFiles(pathHistorico
+										+ File.separator + regressFile.getName()))) {
+							throw new Exception("O arquivo de retorno não pode ser movido para pasta Historico.");
+						}
+					} catch (Exception e) {
+						if (!regressFile.moveFile(regressFile,
+								new ConciliacaoFiles(regressFile.getConfigXml().getPathArquivoErro()
+										+ File.separator + regressFile.getName()))) {
+							throw new Exception(
+									"Erro critico de sistema: O arquivo de retorno não pode ser movido para pasta de ERRO. "
+											+ e.getMessage());
+						}
+
+						new Log(this.getConfigXml().getPathErrorLog()).makeLog(e);
+						new Mail(this.configXml, new ErrorLog(Calendar.getInstance(), e)).sendMail();
+
+					}
+
+				} catch (Exception e) {
+					new Log(this.getConfigXml().getPathErrorLog()).makeLog(e);
+					new Mail(this.configXml, new ErrorLog(Calendar.getInstance(), e)).sendMail();
+					this.moverArquivoComErro(path, e);
+				}
+			}
+		}
 	}
 
 	private void moverArquivoComErro(Path path, Exception e) throws Exception {
