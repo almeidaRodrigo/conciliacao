@@ -50,16 +50,16 @@ public class Controller {
 		this.setLog(new Log(this.configXml.getPathErrorLog()));
 
 		while (true) {
-			System.out.println("Inciciando tempo de espera pré definido...");
+			//System.out.println("Inciciando tempo de espera pré definido...");
 			Thread.sleep(this.configXml.getIntervaloMilisegundos());
-			System.out.println("...tempo de espera pré definido finalizado!");
+			//System.out.println("...tempo de espera pré definido finalizado!");
 			this.run();
-			System.out.println("Finalizado laço de repetição! Aplicação entrando em modo espera...");
+			//System.out.println("Finalizado laço de repetição! Aplicação entrando em modo espera...");
 		}
 	}
 
 	private void run() throws Exception {
-		System.out.println("Iniciando processamento de arquivos...");
+		//System.out.println("Iniciando processamento de arquivos...");
 		Connection conn = null;
 
 		// Arquivos dentro dos diretorios definidos no ConfigXml para DAMs de 15
@@ -92,7 +92,7 @@ public class Controller {
 				
 			}
 
-		System.out.println("...Fim do processamento dos arquivos.");
+		//System.out.println("...Fim do processamento dos arquivos.");
 
 		// Realiza-se o fechamento da conexão, caso esteja aberta;
 		if (conn != null) {
@@ -103,14 +103,22 @@ public class Controller {
 	}
 	
 	private void procArquivo(LoteDao loteDao, File[] listFiles, TipoDamEnum tipoDam) throws Exception{
+		Path path = null;
+		Path pathHistorico = null;
+		RegressFile regressFile = null;
+		ConciliacaoFiles fileMoved = null;
+		ConciliacaoFiles fileError = null;
+		
 		for (File fPath : listFiles) {
 			if (fPath.isFile()) {
-				Path path = FileSystems.getDefault().getPath(fPath.getPath());
-				Path pathHistorico = null;
-				
+				path = FileSystems.getDefault().getPath(fPath.getPath());
+
 				try {
 					// Arquivo de retorno
-					RegressFile regressFile = new RegressFile(path, this.getConfigXml(), tipoDam);
+					regressFile = new RegressFile(path, this.getConfigXml(), tipoDam);
+					
+					// Arquivo que será movido para pasta de erro
+					fileError = new ConciliacaoFiles(regressFile.getConfigXml().getPathArquivoErro()+File.separator+regressFile.getName()); 
 
 					try {
 						// Inserir o lote na base de dados;
@@ -123,46 +131,59 @@ public class Controller {
 						}else{
 							throw new Exception("Erro gerado no Controller: Não foi possivel determinar o tipo de DAM.");
 						}
+						
+						// Arquivo que será movido para pasta historico
+						fileMoved = new ConciliacaoFiles(pathHistorico+File.separator+regressFile.getName());
 
 						// Mover arquivo para pasta Historico conforme
 						// ConfigXml e TipoDam;
-						if (!regressFile.moveFile(regressFile,
-								new ConciliacaoFiles(pathHistorico
-										+ File.separator + regressFile.getName()))) {
+						if (!regressFile.moveFile(regressFile,fileMoved)) {
 							throw new Exception("O arquivo de retorno não pode ser movido para pasta Historico.");
 						}
 					} catch (Exception e) {
-						if (!regressFile.moveFile(regressFile,
-								new ConciliacaoFiles(regressFile.getConfigXml().getPathArquivoErro()
-										+ File.separator + regressFile.getName()))) {
-							throw new Exception(
-									"Erro critico de sistema: O arquivo de retorno não pode ser movido para pasta de ERRO. "
-											+ e.getMessage());
+						if (!regressFile.moveFile(regressFile,fileError)) {
+							throw new Exception("Erro critico de sistema: O arquivo de retorno não pode ser movido para pasta de ERRO. "+ e.getMessage());
 						}
 
 						new Log(this.getConfigXml().getPathErrorLog()).makeLog(e);
 						new Mail(this.configXml, new ErrorLog(Calendar.getInstance(), e)).sendMail();
 
+					}finally {
+						pathHistorico = null;
+						fileMoved   = null;
 					}
 
 				} catch (Exception e) {
 					new Log(this.getConfigXml().getPathErrorLog()).makeLog(e);
 					new Mail(this.configXml, new ErrorLog(Calendar.getInstance(), e)).sendMail();
 					this.moverArquivoComErro(path, e);
+					
+				}finally {
+					regressFile = null;
+					fileError   = null;
+					path = null;
+					
 				}
+				
+				
+				
+				
+				
+				
+				
 			}
 		}
 	}
 
 	private void moverArquivoComErro(Path path, Exception e) throws Exception {
 		ConciliacaoFiles regressFile = new ConciliacaoFiles(path);
+		ConciliacaoFiles fileError   = new ConciliacaoFiles(this.configXml.getPathArquivoErro() + File.separator + regressFile.getName());
 
 		if (!regressFile.getParentFile().exists()) {
 			regressFile.getParentFile().mkdirs();
 		}
 
-		if (!regressFile.moveFile(regressFile,
-				new ConciliacaoFiles(this.configXml.getPathArquivoErro() + File.separator + regressFile.getName()))) {
+		if (!regressFile.moveFile(regressFile,fileError)) {
 			throw new Exception(
 					"Erro critico de sistema: O arquivo de retorno não pode ser movido para pasta de ERRO no momento da instanciação, verifique permissões no diretorio definido. "
 							+ e.getMessage());
@@ -170,6 +191,9 @@ public class Controller {
 
 		new Mail(this.getConfigXml(), new ErrorLog(Calendar.getInstance(),
 				new Exception("O arquivo de retorno pode não ser válido. " + e.getMessage()))).sendMail();
+		
+		regressFile = null;
+		fileError   = null;
 
 	}
 
