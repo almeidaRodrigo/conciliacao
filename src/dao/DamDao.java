@@ -78,6 +78,19 @@ public class DamDao {
 			stmt.setInt(1, regressFile.getLote().getCodigoLote());
 			stmt.setInt(2, dam.getNumSeq());
 			stmt.setString(3, dam.getCodigoAgencia());
+			
+			/*
+			 * Condicional para avaliar se o DAM já corresponde 
+			 * ao novo formato; 
+			 * Após a eliminação de DAMs legado, remover este IF
+			 * e configurar nova posicao do DAM no arquivo XML.
+			 * Valido ate 2017.
+			 */
+			if(dam.getNumDam().substring(0, 4).equals("2016") || dam.getNumDam().substring(0, 4).equals("2017")){
+				dam.setNumDam(dam.getCodigoUsuario().substring(1, 10));
+				dam.setCodigoUsuario("");
+			}
+			
 			/*
 			 *  Condicional para calculo de digito verificador do DAM assumindo o tamanho de 7 como legado (por isso a adição do pre fixo zero)
 			 *  e menor que 7 DAM legado de papelaria (por isso a adição do pre fixo um;
