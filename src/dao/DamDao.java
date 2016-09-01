@@ -88,19 +88,20 @@ public class DamDao {
 			 */
 			if(dam.getNumDam().substring(0, 4).equals("2016") || dam.getNumDam().substring(0, 4).equals("2017")){
 				dam.setNumDam(dam.getCodigoUsuario().substring(1, 10));
+				stmt.setString(4, dam.getNumDam());
 				dam.setCodigoUsuario("");
-			}
-			
-			/*
-			 *  Condicional para calculo de digito verificador do DAM assumindo o tamanho de 7 como legado (por isso a adição do pre fixo zero)
-			 *  e menor que 7 DAM legado de papelaria (por isso a adição do pre fixo um;
-			 */
-			if(lengthDam == 7){
-				stmt.setString(4, "0"+dam.getNumDam()+DigitoVerificador.obterDigito("0"+dam.getNumDam()));
-			}else if(lengthDam > 7){
-				stmt.setString(4, dam.getNumDam()+DigitoVerificador.obterDigito(dam.getNumDam()));
 			}else{
-				stmt.setString(4, "1"+dam.getNumDam()+DigitoVerificador.obterDigito("1"+dam.getNumDam()));
+				/*
+				 *  Condicional para calculo de digito verificador do DAM assumindo o tamanho de 7 como legado (por isso a adição do pre fixo zero)
+				 *  e menor que 7 DAM legado de papelaria (por isso a adição do pre fixo um;
+				 */
+				if(lengthDam == 7){
+					stmt.setString(4, "0"+dam.getNumDam()+DigitoVerificador.obterDigito("0"+dam.getNumDam()));
+				}else if(lengthDam > 7){
+					stmt.setString(4, dam.getNumDam()+DigitoVerificador.obterDigito(dam.getNumDam()));
+				}else{
+					stmt.setString(4, "1"+dam.getNumDam()+DigitoVerificador.obterDigito("1"+dam.getNumDam()));
+				}
 			}
 
 			stmt.setInt(5, dam.getSeqDuplicacao());
