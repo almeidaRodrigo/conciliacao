@@ -58,4 +58,60 @@ public class DialogScreen implements IScreen {
 		// TODO implement here
 	}
 
+	/**
+	 * 
+	 */
+	public void configure(IWindow window) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getTitle() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setTitle(String title) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getSubTitle() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setSubTitle(String subTitle) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public IMenu getMenu() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setMenu(IMenu menu) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public IFrame getFrame() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setFrame(IFrame frame) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
