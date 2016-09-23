@@ -16,6 +16,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -69,7 +70,13 @@ public class ButtonGenerator {
 							Image iconImg = null;
 
 							try {
-								iconImg = ImageIO.read(new File(getClass().getResource("/img/financial-icon.png").getPath()));
+								iconImg = ImageIO.read(FileSystems.getDefault().getPath(
+										System.getProperty("user.dir")
+										+ File.separator
+										+ "img" 
+										+ File.separator
+										+"financial-icon.png").toFile());
+								
 							} catch (IOException e1) {
 								//TODO: Implementar solução de contorno 
 							}

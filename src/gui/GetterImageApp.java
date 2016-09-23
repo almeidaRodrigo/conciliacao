@@ -6,10 +6,8 @@ package gui;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-
+import java.nio.file.FileSystems;
 import javax.imageio.ImageIO;
-
-import principal.InitializerGUI;
 
 /**
  * @author rodrigo
@@ -32,9 +30,15 @@ public class GetterImageApp {
 	 */
 	public static Image getImage() throws IOException {
 		if(image == null){
-			setImage(ImageIO.read(new File(InitializerGUI.class.getResource("/img/financial-icon.png").getPath())));
+			setImage(ImageIO.read(FileSystems.getDefault().getPath(
+				System.getProperty("user.dir")
+				+ File.separator
+				+ "img" 
+				+ File.separator
+				+"financial-icon.png").toFile()
+			));
 		}
-		
+
 		return image;
 	}
 
