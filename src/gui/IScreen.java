@@ -1,5 +1,8 @@
 package gui;
 
+import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+
 /**
  * 
  */
@@ -38,12 +41,12 @@ public interface IScreen {
 	/**
 	 * @return
 	 */
-	public String getSubTitle();
+	public JLabel getSubTitle();
 
 	/**
 	 * @param subTitle
 	 */
-	public void setSubTitle(String subTitle);
+	public void setSubTitle(JLabel subTitle);
 
 	/**
 	 * @return
@@ -58,12 +61,12 @@ public interface IScreen {
 	/**
 	 * @return
 	 */
-	public IMenu getMenu();
+	public JMenuBar getMenu();
 
 	/**
 	 * @param menu
 	 */
-	public void setMenu(IMenu menu);
+	public void setMenu(JMenuBar menu);
 
 	/**
 	 * @return

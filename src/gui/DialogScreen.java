@@ -1,5 +1,8 @@
 package gui;
 
+import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+
 /**
  * 
  */
@@ -10,58 +13,27 @@ public class DialogScreen implements IScreen {
 	 */
 	public DialogScreen() {
 	}
-	
-	/**
-	 * @param window
-	 */
-	public DialogScreen(IWindow window) {
-		this.window = window;
-	}
 
-	/**
-	 * 
-	 */
-	public IWindow window;
-
-	/**
-	 * @return the window
-	 */
-	public IWindow getWindow() {
-		return window;
-	}
-
-	/**
-	 * @param window the window to set
-	 */
-	public void setWindow(IWindow window) {
-		this.window = window;
-	}
-
-	/**
-	 * 
-	 */
+	@Override
 	public void show() {
-		// TODO implement here
+		// TODO Auto-generated method stub
+		
 	}
 
-	/**
-	 * 
-	 */
-	public void repaint() {
-		// TODO implement here
-	}
-
-	/**
-	 * 
-	 */
-	public void close() {
-		// TODO implement here
-	}
-
-	/**
-	 * 
-	 */
+	@Override
 	public void configure(IWindow window) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void repaint() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void close() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -79,25 +51,37 @@ public class DialogScreen implements IScreen {
 	}
 
 	@Override
-	public String getSubTitle() {
+	public JLabel getSubTitle() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void setSubTitle(String subTitle) {
+	public void setSubTitle(JLabel subTitle) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public IMenu getMenu() {
+	public IWindow getWindow() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void setMenu(IMenu menu) {
+	public void setWindow(IWindow window) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public JMenuBar getMenu() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setMenu(JMenuBar menu) {
 		// TODO Auto-generated method stub
 		
 	}

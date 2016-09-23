@@ -4,12 +4,13 @@ import java.io.File;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.Calendar;
-
 import javax.swing.JOptionPane;
-
 import org.apache.commons.mail.EmailException;
 import email.Mail;
 import erro.ErrorLog;
+import gui.ButtonGenerator;
+import gui.GetterImageApp;
+import gui.WindowGenerator;
 
 public class Start {
 
@@ -30,6 +31,9 @@ public class Start {
 			try {
 				Path configPath = FileSystems.getDefault().getPath(System.getProperty("user.dir"), File.separator, "config.xml");
 				Path logPath = FileSystems.getDefault().getPath(System.getProperty("user.dir"), File.separator, "logError.txt");
+
+				InitializerGUI.show(GetterImageApp.getImage(), WindowGenerator.getWindow(), ButtonGenerator.generate(WindowGenerator.getWindow()));
+				
 				new Controller(configPath, logPath);
 			} catch (Exception e2) {
 				String erro = e2.getMessage();
@@ -48,3 +52,5 @@ public class Start {
 	}
 
 }
+
+

@@ -1,6 +1,8 @@
 package gui;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuBar;
 
 /**
  * 
@@ -11,6 +13,13 @@ public class AppScreen extends JFrame implements IScreen {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Default Constructor
+	 */
+	public AppScreen(){
+		
+	}
 
 	/**
 	 * @param title
@@ -19,7 +28,7 @@ public class AppScreen extends JFrame implements IScreen {
 	 * @param menu
 	 * @param frame
 	 */
-	public AppScreen(String title, String subTitle, IWindow window, IMenu menu, IFrame frame) {
+	public AppScreen(String title, JLabel subTitle, IWindow window, JMenuBar menu, IFrame frame) {
 		this.title = title;
 		this.subTitle = subTitle;
 		this.window = window;
@@ -35,7 +44,7 @@ public class AppScreen extends JFrame implements IScreen {
 	/**
 	 * 
 	 */
-	private String subTitle;
+	private JLabel subTitle;
 
 	/**
 	 * 
@@ -45,7 +54,7 @@ public class AppScreen extends JFrame implements IScreen {
 	/**
 	 * 
 	 */
-	private IMenu menu;
+	private JMenuBar menu;
 
 	/**
 	 * 
@@ -69,14 +78,14 @@ public class AppScreen extends JFrame implements IScreen {
 	/**
 	 * @return the subTitle
 	 */
-	public String getSubTitle() {
+	public JLabel getSubTitle() {
 		return subTitle;
 	}
 
 	/**
 	 * @param subTitle the subTitle to set
 	 */
-	public void setSubTitle(String subTitle) {
+	public void setSubTitle(JLabel subTitle) {
 		this.subTitle = subTitle;
 	}
 
@@ -97,14 +106,14 @@ public class AppScreen extends JFrame implements IScreen {
 	/**
 	 * @return the menu
 	 */
-	public IMenu getMenu() {
+	public JMenuBar getMenu() {
 		return menu;
 	}
 
 	/**
 	 * @param menu the menu to set
 	 */
-	public void setMenu(IMenu menu) {
+	public void setMenu(JMenuBar menu) {
 		this.menu = menu;
 	}
 
@@ -126,7 +135,7 @@ public class AppScreen extends JFrame implements IScreen {
 	 * 
 	 */
 	public void show() {
-		this.window.initialize();
+		this.window.initialize(title, subTitle, menu, frame);
 	}
 
 	/**
@@ -148,6 +157,11 @@ public class AppScreen extends JFrame implements IScreen {
 	 */
 	public void close() {
 		// TODO implement here
+	}
+	
+	@Override
+	public void setVisible(boolean b){
+		super.setVisible(b);
 	}
 
 
