@@ -13,6 +13,7 @@ import java.util.Locale;
 import conexao.ObterConexao;
 import dao.DamDao;
 import dao.LoteDao;
+import utilitario.DigitoVerificador;
 import utilitario.ObterCalendar;
 import utilitario.RegressTreatment;
 import vo.ConfigXml;
@@ -42,6 +43,10 @@ public class RegressFile extends ConciliacaoFiles {
 		this.setConfigXml(configXml);
 		this.tipoDam = tipoDam;
 		this.populate();
+		
+		this.verificaNumDamNovo();
+		this.getSeqDuplicacao();
+		
 		this.gerarLote(this);
 
 		this.setDams(this.geraDataCredito(this.getDams()));
@@ -179,12 +184,6 @@ public class RegressFile extends ConciliacaoFiles {
 		 */
 		int numSeq = 1;
 
-		/*
-		 * seqDupIncremento: resultado do contador na tabela do dam. É o valor
-		 * correspondente da quantidade de vezes da ocorrencia do DAM.
-		 */
-		int seqDuplicacao;
-
 		String linha;
 		ArrayList<String> linhas = new ArrayList<>();
 
@@ -250,14 +249,6 @@ public class RegressFile extends ConciliacaoFiles {
 			colRange = this.configXml.getLayout().getColStartEndByAttribute(fieldsDam[1].getName());
 			dam.getClass().getField(fieldsDam[0].getName()).set(dam, numSeq);
 			// -Fim numSeq
-
-			// Segundo Atributo do DAM: Efetua a captura do SeqDuplicacao
-			// EXCLUSIVAMENTE via consulta a tabela do dam.
-			colRange = this.configXml.getLayout().getColStartEndByAttribute("numDam");
-			seqDuplicacao = new DamDao(ObterConexao.connect(this.configXml))
-					.countDam(lin.substring(colRange[0], colRange[1]), this.tipoDam);
-			dam.getClass().getField(fieldsDam[1].getName()).set(dam, seqDuplicacao);
-			// -Fim SeqDuplicacao
 
 			// Demais Atributos do DAM: preenchimento condicional.
 			for (int index = 2; index < fieldsDam.length; index++) {
@@ -389,6 +380,50 @@ public class RegressFile extends ConciliacaoFiles {
 		}
 		
 		return lDams;
+	}
+	
+	private void getSeqDuplicacao() throws Exception{
+		//Efetua a captura do SeqDuplicacao
+		//EXCLUSIVAMENTE via consulta a tabela do dam.
+		ArrayList<Dam> lDams = this.getDams();
+		
+		for (Dam dam : lDams) {
+			dam.setSeqDuplicacao(new DamDao(ObterConexao.connect(this.configXml))
+					.countDam(dam.getNumDam(), this.tipoDam));
+		}
+
+	}
+	
+	private void verificaNumDamNovo(){
+		/*
+		 * Condicional para avaliar se o DAM já corresponde 
+		 * ao novo formato; 
+		 * Após a eliminação de DAMs legado, remover este IF
+		 * e configurar nova posicao do DAM no arquivo XML.
+		 * Valido ate 2017.
+		 */
+		ArrayList<Dam> lDams = this.getDams();
+		
+		for (Dam dam : lDams) {
+			if(dam.getNumDam().substring(0, 4).equals("2016") || dam.getNumDam().substring(0, 4).equals("2017")){
+				dam.setNumDam(dam.getCodigoUsuario().substring(1, 10));
+				dam.setCodigoUsuario("");
+			}else{
+				/*
+				 *  Condicional para calculo de digito verificador do DAM assumindo o tamanho de 7 como legado (por isso a adição do pre fixo zero)
+				 *  e menor que 7 DAM legado de papelaria (por isso a adição do pre fixo um;
+				 */
+				int lengthDam = String.valueOf(Integer.parseInt(dam.getNumDam())).length();
+				if(lengthDam == 7){
+					dam.setNumDam("0"+dam.getNumDam()+DigitoVerificador.obterDigito("0"+dam.getNumDam()));
+				}else if(lengthDam > 7){
+					dam.setNumDam(dam.getNumDam()+DigitoVerificador.obterDigito(dam.getNumDam()));
+				}else{
+					dam.setNumDam("1"+dam.getNumDam()+DigitoVerificador.obterDigito("1"+dam.getNumDam()));
+				}
+			}
+		}
+		
 	}
 
 }
