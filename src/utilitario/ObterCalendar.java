@@ -27,7 +27,7 @@ public final class ObterCalendar {
 			c.set(ano, mes, dia);
 			return c;
 		}else{
-			throw new Exception("A data solicitada não pode ser criada pois não esta no formato AAAAMMDD.");
+			throw new Exception("A data solicitada não pode ser criada pois não esta no formato AAAAMMDD: "+data);
 		}
 
 	}
