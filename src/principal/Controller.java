@@ -50,13 +50,12 @@ public class Controller {
 		this.setLog(new Log(this.configXml.getPathErrorLog()));
 
 		while (true) {
-			// System.out.println("Inciciando tempo de espera pré definido...");
-			Thread.sleep(this.configXml.getIntervaloMilisegundos());
-			// System.out.println("...tempo de espera pré definido
-			// finalizado!");
+			//Inicializa processar arquivo
 			this.run();
-			// System.out.println("Finalizado laço de repetição! Aplicação
-			// entrando em modo espera...");
+			
+			//Entra em modo de espera pelo tempo determinado no Config.xml
+			Thread.sleep(this.configXml.getIntervaloMilisegundos());
+
 		}
 	}
 
