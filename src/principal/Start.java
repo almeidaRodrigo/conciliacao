@@ -44,7 +44,7 @@ public class Start {
 					erro += " | " + e3.getMessage();
 				}
 				
-				JOptionPane.showMessageDialog(null, "Erro crítico de sistema: " + erro, "CONCILIAÇÃO - ERRO CRITICO:", JOptionPane.ERROR_MESSAGE); 
+				JOptionPane.showMessageDialog(null, "O SISTEMA PAROU! Erro crítico: " + erro, "CONCILIAÇÃO - ERRO CRITICO:", JOptionPane.ERROR_MESSAGE); 
 			}
 			
 		}

@@ -405,7 +405,9 @@ public class RegressFile extends ConciliacaoFiles {
 		ArrayList<Dam> lDams = this.getDams();
 		
 		for (Dam dam : lDams) {
-			if(dam.getNumDam().substring(0, 4).equals("2016") || dam.getNumDam().substring(0, 4).equals("2017")){
+			if(dam.getNumDam().substring(0, 4).equals("2016")
+					|| dam.getNumDam().substring(0, 4).equals("2017")
+					|| dam.getNumDam().substring(0, 4).equals("2018")){
 				dam.setNumDam(dam.getCodigoUsuario().substring(1, 10));
 				dam.setCodigoUsuario("");
 			}else{
