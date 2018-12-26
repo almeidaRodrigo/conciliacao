@@ -44,7 +44,7 @@ public class RegressFile extends ConciliacaoFiles {
 		this.tipoDam = tipoDam;
 		this.populate();
 		
-		this.verificaNumDamNovo();
+		//this.verificaNumDamNovo();
 		this.getSeqDuplicacao();
 		
 		this.gerarLote(this);
@@ -394,38 +394,39 @@ public class RegressFile extends ConciliacaoFiles {
 
 	}
 	
-	private void verificaNumDamNovo(){
-		/*
-		 * Condicional para avaliar se o DAM já corresponde 
-		 * ao novo formato; 
-		 * Após a eliminação de DAMs legado, remover este IF
-		 * e configurar nova posicao do DAM no arquivo XML.
-		 * Valido ate 2017.
-		 */
-		ArrayList<Dam> lDams = this.getDams();
-		
-		for (Dam dam : lDams) {
-			if(dam.getNumDam().substring(0, 4).equals("2016")
-					|| dam.getNumDam().substring(0, 4).equals("2017")
-					|| dam.getNumDam().substring(0, 4).equals("2018")){
-				dam.setNumDam(dam.getCodigoUsuario().substring(1, 10));
-				dam.setCodigoUsuario("");
-			}else{
-				/*
-				 *  Condicional para calculo de digito verificador do DAM assumindo o tamanho de 7 como legado (por isso a adição do pre fixo zero)
-				 *  e menor que 7 DAM legado de papelaria (por isso a adição do pre fixo um;
-				 */
-				int lengthDam = String.valueOf(Integer.parseInt(dam.getNumDam())).length();
-				if(lengthDam == 7){
-					dam.setNumDam("0"+dam.getNumDam()+DigitoVerificador.obterDigito("0"+dam.getNumDam()));
-				}else if(lengthDam > 7){
-					dam.setNumDam(dam.getNumDam()+DigitoVerificador.obterDigito(dam.getNumDam()));
-				}else{
-					dam.setNumDam("1"+dam.getNumDam()+DigitoVerificador.obterDigito("1"+dam.getNumDam()));
-				}
-			}
-		}
-		
-	}
+	
+//	private void verificaNumDamNovo(){
+//		/*
+//		 * Condicional para avaliar se o DAM já corresponde 
+//		 * ao novo formato; 
+//		 * Após a eliminação de DAMs legado, remover este IF
+//		 * e configurar nova posicao do DAM no arquivo XML.
+//		 * Valido ate 2017.
+//		 */
+//		ArrayList<Dam> lDams = this.getDams();
+//		
+//		for (Dam dam : lDams) {
+//			if(dam.getNumDam().substring(0, 4).equals("2016")
+//					|| dam.getNumDam().substring(0, 4).equals("2017")
+//					|| dam.getNumDam().substring(0, 4).equals("2018")){
+//				dam.setNumDam(dam.getCodigoUsuario().substring(1, 10));
+//				dam.setCodigoUsuario("");
+//			}else{
+//				/*
+//				 *  Condicional para calculo de digito verificador do DAM assumindo o tamanho de 7 como legado (por isso a adição do pre fixo zero)
+//				 *  e menor que 7 DAM legado de papelaria (por isso a adição do pre fixo um;
+//				 */
+//				int lengthDam = String.valueOf(Integer.parseInt(dam.getNumDam())).length();
+//				if(lengthDam == 7){
+//					dam.setNumDam("0"+dam.getNumDam()+DigitoVerificador.obterDigito("0"+dam.getNumDam()));
+//				}else if(lengthDam > 7){
+//					dam.setNumDam(dam.getNumDam()+DigitoVerificador.obterDigito(dam.getNumDam()));
+//				}else{
+//					dam.setNumDam("1"+dam.getNumDam()+DigitoVerificador.obterDigito("1"+dam.getNumDam()));
+//				}
+//			}
+//		}
+//		
+//	}
 
 }
